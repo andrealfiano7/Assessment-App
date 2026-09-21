@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { AssessmentProfile } from '../types/rmi';
 import { CalculationResult } from '../utils/calculator';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export type NavTabId =
   | 'dashboard'
@@ -129,87 +129,96 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <aside
-      className={`glass-sidebar print:hidden sticky top-4 h-[calc(100vh-2rem)] flex flex-col justify-between shrink-0 z-30 transition-all duration-300 ${
-        isCollapsed ? 'w-20 p-2.5' : 'w-64 p-3.5'
+    <motion.aside
+      layout="position"
+      animate={{ width: isCollapsed ? 76 : 260 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+      className={`glass-sidebar print:hidden sticky top-3 sm:top-4 h-[calc(100vh-1.5rem)] sm:h-[calc(100vh-2rem)] flex flex-col justify-between shrink-0 z-30 overflow-hidden ${
+        isCollapsed ? 'p-2' : 'p-3.5'
       }`}
     >
       {/* Top Part: Workspace/Profile Card + Menu Groups */}
       <div className="flex flex-col min-h-0">
         {/* Workspace Card (Flowly Style from UI Kit) */}
-        <div className="mb-3.5 pb-3 border-b border-white/80">
-          {!isCollapsed ? (
-            <div className="flex items-center justify-between gap-2 p-1.5 rounded-2xl hover:bg-white/60 transition group">
-              <button
-                onClick={onOpenProfile}
-                className="flex items-center gap-2.5 min-w-0 text-left flex-1"
-                title="Klik untuk ubah profil BUMN"
-              >
-                {/* Logo Squircle with specular highlight */}
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6531F7] to-[#AB68FF] p-0.5 shadow-[0_0_12px_rgba(101,49,247,0.35)] shrink-0 flex items-center justify-center">
-                  <div className="w-full h-full rounded-[10px] bg-white/15 backdrop-blur-xs flex items-center justify-center text-white font-black text-sm">
-                    <Shield className="w-5 h-5 text-white" />
-                  </div>
+        <div className="mb-3 pb-3 border-b border-white/80">
+          <div className="flex items-center justify-between gap-1 p-1 rounded-2xl hover:bg-white/60 transition group">
+            <button
+              onClick={onOpenProfile}
+              className="flex items-center gap-2 min-w-0 text-left flex-1 cursor-pointer"
+              title={`${profile.companyName} (${modelLabel})`}
+            >
+              {/* Logo Squircle with specular highlight */}
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6531F7] to-[#AB68FF] p-0.5 shadow-[0_0_12px_rgba(101,49,247,0.35)] shrink-0 flex items-center justify-center">
+                <div className="w-full h-full rounded-[10px] bg-white/15 backdrop-blur-xs flex items-center justify-center text-white font-black text-sm">
+                  <Shield className="w-5 h-5 text-white" />
                 </div>
-
-                <div className="min-w-0 flex-1">
-                  <div className="text-xs font-extrabold text-slate-900 truncate leading-tight flex items-center gap-1">
-                    <span>{profile.companyName}</span>
-                  </div>
-                  <div className="text-[10px] text-slate-500 font-medium truncate mt-0.5">
-                    {modelLabel}
-                  </div>
-                </div>
-              </button>
-
-              <div className="flex items-center gap-0.5">
-                <button
-                  onClick={onOpenProfile}
-                  className="w-7 h-7 rounded-lg hover:bg-white flex items-center justify-center text-slate-400 hover:text-slate-800 transition"
-                  title="Profil BUMN"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={onToggleCollapse}
-                  className="w-7 h-7 rounded-lg hover:bg-white flex items-center justify-center text-slate-400 hover:text-[#6531F7] transition"
-                  title="Ciutkan Sidebar"
-                >
-                  <PanelLeftClose className="w-3.5 h-3.5" />
-                </button>
               </div>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center gap-2">
-              <button
-                onClick={onOpenProfile}
-                className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#6531F7] to-[#AB68FF] p-0.5 shadow-[0_0_12px_rgba(101,49,247,0.35)] flex items-center justify-center cursor-pointer transition hover:scale-105"
-                title={`${profile.companyName} (${modelLabel})`}
-              >
-                <div className="w-full h-full rounded-[14px] bg-white/15 flex items-center justify-center text-white">
-                  <Shield className="w-5 h-5" />
-                </div>
-              </button>
+
+              <AnimatePresence initial={false}>
+                {!isCollapsed && (
+                  <motion.div
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: 'auto' }}
+                    exit={{ opacity: 0, width: 0 }}
+                    transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    className="min-w-0 flex-1 overflow-hidden whitespace-nowrap pl-1"
+                  >
+                    <div className="text-xs font-extrabold text-slate-900 truncate leading-tight">
+                      {profile.companyName}
+                    </div>
+                    <div className="text-[10px] text-slate-500 font-medium truncate mt-0.5">
+                      {modelLabel}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+
+            <div className="flex items-center gap-0.5 shrink-0">
+              <AnimatePresence initial={false}>
+                {!isCollapsed && (
+                  <motion.button
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: 'auto' }}
+                    exit={{ opacity: 0, width: 0 }}
+                    transition={{ duration: 0.18 }}
+                    onClick={onOpenProfile}
+                    className="w-7 h-7 rounded-lg hover:bg-white flex items-center justify-center text-slate-400 hover:text-slate-800 transition cursor-pointer overflow-hidden"
+                    title="Profil BUMN"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </motion.button>
+                )}
+              </AnimatePresence>
+
               <button
                 onClick={onToggleCollapse}
-                className="w-7 h-7 rounded-lg hover:bg-white/80 flex items-center justify-center text-slate-400 hover:text-[#6531F7] transition"
-                title="Bentangkan Sidebar"
+                className="w-7 h-7 rounded-lg hover:bg-white flex items-center justify-center text-slate-400 hover:text-[#6531F7] transition cursor-pointer shrink-0"
+                title={isCollapsed ? 'Bentangkan Sidebar' : 'Ciutkan Sidebar'}
               >
-                <PanelLeft className="w-3.5 h-3.5" />
+                {isCollapsed ? <PanelLeft className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
               </button>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Scrollable Navigation Groups */}
         <div className="overflow-y-auto no-scrollbar space-y-4 flex-1 pr-0.5">
           {navGroups.map(group => (
             <div key={group.title} className="space-y-1">
-              {!isCollapsed && (
-                <div className="text-[10px] font-extrabold tracking-wider text-slate-400 px-3 py-1 uppercase">
-                  {group.title}
-                </div>
-              )}
+              <AnimatePresence initial={false}>
+                {!isCollapsed && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.18 }}
+                    className="text-[10px] font-extrabold tracking-wider text-slate-400 px-3 py-1 uppercase overflow-hidden whitespace-nowrap"
+                  >
+                    {group.title}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <div className="space-y-1">
                 {group.items.map(item => {
@@ -247,29 +256,39 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       )}
 
                       <Icon
-                        className={`w-4 h-4 shrink-0 transition-colors ml-3 ${
+                        className={`w-4 h-4 shrink-0 transition-colors ${
+                          !isCollapsed ? 'ml-3' : ''
+                        } ${
                           isActive
                             ? 'text-[#6531F7]'
                             : 'text-slate-400 group-hover:text-slate-700'
                         }`}
                       />
 
-                      {!isCollapsed && (
-                        <div className="min-w-0 flex-1 ml-2.5 flex items-center justify-between">
-                          <span className="text-xs truncate">{item.label}</span>
-                          {item.badge && (
-                            <span
-                              className={`text-[10px] px-1.5 py-0.5 rounded-md shrink-0 ml-1.5 font-bold ${
-                                isActive
-                                  ? 'bg-[#6531F7]/10 text-[#6531F7]'
-                                  : 'bg-slate-100/80 text-slate-500'
-                              }`}
-                            >
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                      )}
+                      <AnimatePresence initial={false}>
+                        {!isCollapsed && (
+                          <motion.div
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: 'auto' }}
+                            exit={{ opacity: 0, width: 0 }}
+                            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                            className="min-w-0 flex-1 ml-2.5 flex items-center justify-between overflow-hidden whitespace-nowrap"
+                          >
+                            <span className="text-xs truncate font-semibold">{item.label}</span>
+                            {item.badge && (
+                              <span
+                                className={`text-[10px] px-1.5 py-0.5 rounded-md shrink-0 ml-1.5 font-bold ${
+                                  isActive
+                                    ? 'bg-[#6531F7]/10 text-[#6531F7]'
+                                    : 'bg-slate-100/80 text-slate-500'
+                                }`}
+                              >
+                                {item.badge}
+                              </span>
+                            )}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </motion.button>
                   );
                 })}
@@ -279,52 +298,77 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
 
-      {/* Bottom Part: Live RMI Hub Pill (UI Kit "AI Insight Hub" Style) */}
-      <div className="pt-3 border-t border-white/80 mt-2 shrink-0">
-        {!isCollapsed ? (
-          <motion.div
-            whileHover={{ scale: 1.02, y: -2 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onSelectTab('dashboard')}
-            className="p-3 rounded-2xl bg-gradient-to-r from-[#6531F7] to-[#804DF8] text-white shadow-[0_0_16px_rgba(101,49,247,0.40)] cursor-pointer hover:shadow-[0_0_24px_rgba(101,49,247,0.6)] transition group relative overflow-hidden"
-          >
-            {/* Ambient Shimmer Sheen */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+      {/* Bottom Part: Live RMI Hub Pill with Vivid, High-Contrast Colorful Text */}
+      <div className="pt-2.5 border-t border-white/80 mt-2 shrink-0">
+        <AnimatePresence mode="wait" initial={false}>
+          {!isCollapsed ? (
+            <motion.div
+              key="expanded-hub"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.18 }}
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => onSelectTab('dashboard')}
+              className="p-3 rounded-2xl bg-gradient-to-br from-[#4A10D9] via-[#6531F7] to-[#7E3AF2] text-white border border-white/30 shadow-[0_6px_22px_rgba(101,49,247,0.40)] cursor-pointer hover:shadow-[0_10px_28px_rgba(101,49,247,0.55)] transition group relative overflow-hidden"
+            >
+              {/* Ambient Specular Shimmer Sheen */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
 
-            <div className="flex items-center justify-between relative z-10">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white">
-                  <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+              <div className="flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white shrink-0 shadow-inner">
+                    <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,199,89,1)]"></span>
+                      <span className="text-xs font-black tracking-tight text-white drop-shadow-sm">
+                        Skor RMI Live
+                      </span>
+                    </div>
+                    <div className="mt-1">
+                      <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/25 text-white shadow-xs backdrop-blur-xs truncate max-w-[110px]">
+                        {calculation.maturityPhase.subLevel}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[11px] font-bold tracking-tight text-white leading-none">
-                    Skor RMI Live
-                  </div>
-                  <div className="text-[10px] text-purple-100/80 mt-0.5 font-medium">
-                    {calculation.maturityPhase.subLevel}
-                  </div>
+
+                <div className="text-right pl-2 shrink-0">
+                  <span className="text-xl font-black tracking-tight text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] block">
+                    {calculation.finalRmiScore.toFixed(2)}
+                  </span>
+                  <span className="text-[9px] font-bold text-purple-200 block">
+                    / 5.00
+                  </span>
                 </div>
               </div>
-
-              <div className="text-right">
-                <span className="text-base font-black tracking-tight text-white">
-                  {calculation.finalRmiScore.toFixed(2)}
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => onSelectTab('dashboard')}
-            className="w-11 h-11 mx-auto rounded-2xl bg-gradient-to-r from-[#6531F7] to-[#804DF8] text-white shadow-[0_0_14px_rgba(101,49,247,0.44)] flex items-center justify-center cursor-pointer"
-            title={`Skor RMI: ${calculation.finalRmiScore.toFixed(2)} (${calculation.maturityPhase.subLevel})`}
-          >
-            <Sparkles className="w-5 h-5 animate-pulse" />
-          </motion.button>
-        )}
+            </motion.div>
+          ) : (
+            <motion.button
+              key="collapsed-hub"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.18 }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => onSelectTab('dashboard')}
+              className="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-[#4A10D9] via-[#6531F7] to-[#7E3AF2] text-white border border-white/30 shadow-[0_6px_18px_rgba(101,49,247,0.40)] flex flex-col items-center justify-center cursor-pointer p-1"
+              title={`Skor RMI: ${calculation.finalRmiScore.toFixed(2)} (${calculation.maturityPhase.subLevel})`}
+            >
+              <span className="text-xs font-black text-amber-300 leading-none drop-shadow-sm">
+                {calculation.finalRmiScore.toFixed(2)}
+              </span>
+              <span className="text-[9px] font-extrabold text-white leading-tight mt-0.5">
+                RMI
+              </span>
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
-    </aside>
+    </motion.aside>
   );
 };

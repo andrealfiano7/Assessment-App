@@ -133,7 +133,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-[#6531F7] selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-[#6531F7] selection:text-white relative">
       {/* Dynamic Animated Ambient Liquid Orbs in Background (GPU Hardware Accelerated) */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 select-none">
         {/* Orb 1: Top Right Sky-Indigo Luminous Float */}
@@ -147,9 +147,9 @@ export function App() {
       </div>
 
       {/* Outer Container with Floating Sticky Sidebar + Main Content Layout */}
-      <div className="flex-1 flex max-w-[1720px] w-full mx-auto p-3 sm:p-4 gap-3 sm:gap-4 relative">
-        {/* Desktop Sticky Side Menu (From UI Kit) */}
-        <div className="hidden md:block shrink-0">
+      <div className="flex-1 flex max-w-[1720px] w-full mx-auto p-3 sm:p-4 gap-3 sm:gap-4 relative items-start">
+        {/* Desktop Sticky Side Menu (Always Sticky on Viewport Scroll) */}
+        <div className="hidden md:block shrink-0 sticky top-3 sm:top-4 self-start z-30">
           <Sidebar
             activeTab={activeTab}
             onSelectTab={setActiveTab}
