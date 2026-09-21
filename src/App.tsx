@@ -302,6 +302,7 @@ export function App() {
                   <OfficialReportView
                     assessmentData={assessmentData}
                     calculation={calculation}
+                    onUpdateRecommendations={handleUpdateRecommendations}
                   />
                 )}
               </motion.div>
