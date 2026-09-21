@@ -1,0 +1,1178 @@
+[
+  {
+    "id": 1,
+    "kebutuhan_data": "Strategi Risiko saat ini, definisi dan prinsip pemilihannya, kriteria prioritas untuk metrik strategi Risiko",
+    "dokumen_sumber": "Dokumen strategi Risiko; kebijakan Manajemen Risiko secara menyeluruh",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 2,
+    "kebutuhan_data": "Pendekatan/proses untuk mengintegrasikan strategi Risiko ke dalam strategi BUMN",
+    "dokumen_sumber": "Peraturan tentang pemantauan batas ambang risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 3,
+    "kebutuhan_data": "Formalisasi langkah/prosedur integrasi Risiko ke dalam proses pengambilan keputusan",
+    "dokumen_sumber": "Prosedur internal (SOP) untuk menerapkan risk appetite",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 4,
+    "kebutuhan_data": "Proses perencanaan dan pemantauan Risiko",
+    "dokumen_sumber": "Kebijakan tentang pemantauan Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 5,
+    "kebutuhan_data": "Dimensi Risiko utama yang harus dipantau (operasional, siber, hukum, dan lain-lain) dan metrik yang digunakan untuk setiap pemantauan dimensi",
+    "dokumen_sumber": "Kebijakan tentang pemantauan Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 6,
+    "kebutuhan_data": "Formalisasi langkah/prosedur atas metrik Risiko yang mengalir ke tingkat entitas yang lebih rendah, yaitu anak perusahaan",
+    "dokumen_sumber": "Tata Kelola Perusahaan",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 7,
+    "kebutuhan_data": "Metodologi yang digunakan untuk mendefinisikan/memantau elemen- elemen penting dari budaya Risiko seperti respect/responsiveness/risk ownership dan transparansi",
+    "dokumen_sumber": "Kode etik - artikel terkait Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 8,
+    "kebutuhan_data": "Metodologi yang digunakan untuk evaluasi tingkat budaya Risiko dalam BUMN termasuk norma-norma perilaku Risiko dalam organisasi dan panduan di mana norma-norma tersebut ditetapkan",
+    "dokumen_sumber": "Pelatihan Risiko, misalnya, program pendidikan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 9,
+    "kebutuhan_data": "Pelatihan dan dokumen internal yang tersedia (misalnya, SOP, pedoman) yang menyoroti potensi Risiko dan metode mitigasi Risiko",
+    "dokumen_sumber": "Pelatihan Risiko, misalnya, program pendidikan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 10,
+    "kebutuhan_data": "2-3 contoh laporan bisnis rutin, dengan analisis terkait Risiko, yang dibuat pada periode tahun buku terakhir",
+    "dokumen_sumber": "Laporan bisnis, dengan terdapat analisis Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 11,
+    "kebutuhan_data": "Pedoman yang relevan terkait dengan whistleblowing dan eskalasi Risiko",
+    "dokumen_sumber": "Pedoman tentang Whistleblowing dan eskalasi Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 12,
+    "kebutuhan_data": "Contoh inisiatif yang membutuhkan kolaborasi lintas fungsi",
+    "dokumen_sumber": "Daftar contoh inisiatif",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 13,
+    "kebutuhan_data": "Contoh catatan rapat/pertemuan terbaru dengan Dewan Komisaris yang membahas isu-isu terkait Risiko",
+    "dokumen_sumber": "Catatan rapat",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 14,
+    "kebutuhan_data": "Contoh metrik penilaian dan kriteria seleksi untuk anggota Dewan Komisaris",
+    "dokumen_sumber": "Job Description atau Board of Commissioner Manual",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 15,
+    "kebutuhan_data": "Keterbukaan informasi publik yang relevan mengenai penunjukan anggota Dewan Komisaris tertentu, terutama yang terlibat dalam komite audit BUMN",
+    "dokumen_sumber": "Artikel publik/ situs web",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 16,
+    "kebutuhan_data": "Gambaran umum komite dan pasal- pasal terkait yang termasuk dalam anggaran dasar BUMN",
+    "dokumen_sumber": "Kutipan dari Laporan Tahunan",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 17,
+    "kebutuhan_data": "Kebijakan, pedoman yang menunjuk pemilik Risiko dalam organisasi",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 18,
+    "kebutuhan_data": "Proses yang terdokumentasi untuk memutuskan pengambil keputusan utama untuk situasi berisiko tinggi",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 19,
+    "kebutuhan_data": "Bagan organisasi untuk organ pengelola Risiko (misalnya, departemen kepatuhan, komite audit) serta peran dan tanggung jawab badan-badan tersebut",
+    "dokumen_sumber": "Bagan Organisasi; Kebijakan Manajemen Risiko; kebijakan pengendalian internal",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 20,
+    "kebutuhan_data": "Proses dan aktivitas terstandar yang dicakup oleh organ pengelola Risiko yang relevan",
+    "dokumen_sumber": "Bagan Organisasi; Kebijakan Manajemen Risiko; kebijakan pengendalian internal",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 21,
+    "kebutuhan_data": "Contoh risalah rapat dan analisis yang membahas mitigasi dan tanggapan terhadap Risiko utama yang dialami BUMN pada tahun buku terakhir",
+    "dokumen_sumber": "Notulen rapat",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 22,
+    "kebutuhan_data": "Mandat yang mengatur tingkat independensi (mengacu pada independensi dalam hal kekuatan pengambilan keputusan dan garis pelaporan) untuk setiap organ pengelola Risiko dalam BUMN",
+    "dokumen_sumber": "Anggaran Dasar; Kebijakan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 23,
+    "kebutuhan_data": "Lingkup pekerjaan dan jalur pelaporan langsung antara fungsi Risiko dan assurance",
+    "dokumen_sumber": "Bagan organisasi",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 24,
+    "kebutuhan_data": "Standar prosedur (SOP) Manajemen Risiko",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko dan prosedur terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 25,
+    "kebutuhan_data": "Dokumen yang relevan yang menggambarkan selera Risiko bisnis dan pendekatan untuk menilai faktor/ peristiwa yang relevan terhadap selera tersebut",
+    "dokumen_sumber": "Dokumen selera Risiko; kebijakan Manajemen Risiko secara menyeluruh",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 26,
+    "kebutuhan_data": "Daftar repositori dan sistem pendukung untuk memfasilitasi Manajemen Risiko",
+    "dokumen_sumber": "Daftar repositori dana sistem pendukung Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 27,
+    "kebutuhan_data": "Contoh notulen rapat di mana peningkatan dan inisiatif ERM dibahas",
+    "dokumen_sumber": "Notulen rapat",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 28,
+    "kebutuhan_data": "Laporan dan penilaian terkait dengan 1-2 inisiatif Manajemen Risiko terbaru yang diterapkan di BUMN",
+    "dokumen_sumber": "Rencana perusahaan 5 tahun; rencana Manajemen Risiko tahunan; rencana audit tahunan",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 29,
+    "kebutuhan_data": "Contoh laporan dan analisis bisnis terkait kesenjangan antara rencana bisnis BUMN dengan hasil aktual",
+    "dokumen_sumber": "Contoh laporan bisnis (triwulanan, tahunan, dll.)",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 30,
+    "kebutuhan_data": "Rencana transformasi ERM (daftar komprehensif terkait inisiatif dan rencana eksekusi untuk meningkatkan Manajemen Risiko perusahaan) untuk jangka menengah dan jangka panjang",
+    "dokumen_sumber": "Rencana transformasi ERM",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 31,
+    "kebutuhan_data": "Ambang batas standar atau persyaratan minimum pada indikator Risiko utama (KRI)",
+    "dokumen_sumber": "Peraturan tentang pemantauan KRI",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 32,
+    "kebutuhan_data": "Kerangka kerja dan SOP yang merinci kewajiban dan selera Risiko BUMN",
+    "dokumen_sumber": "Dokumen selera Risiko; kebijakan Manajemen Risiko yang menyeluruh; Anggaran Dasar Perusahaan",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 33,
+    "kebutuhan_data": "Keterbukaan informasi publik terkait selera Risiko BUMN",
+    "dokumen_sumber": "Contoh keterbukaan informasi",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 34,
+    "kebutuhan_data": "Proses dan kerangka kerja untuk identifikasi Risiko",
+    "dokumen_sumber": "Kebijakan manajemen Risiko dan prosedur terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 35,
+    "kebutuhan_data": "Proses, metrik, dan model untuk penilaian dan prioritisasi Risiko",
+    "dokumen_sumber": "Kebijakan manajemen Risiko dan prosedur terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 36,
+    "kebutuhan_data": "Pedoman atau SOP terkait frekuensi pelaporan Risiko dalam bentuk pertemuan formal",
+    "dokumen_sumber": "Guideline atau Prosedur Internal (SOP)",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 37,
+    "kebutuhan_data": "Catatan saat ini tentang latensi data (Latensi data: waktu yang dibutuhkan untuk suatu data dapat tersedia di database atau data warehouse setelah suatu kejadian terjadi)",
+    "dokumen_sumber": "Catatan latensi data",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 38,
+    "kebutuhan_data": "Piagam otorisasi (daftar pemangku kepentingan dengan otorisasi atau hak untuk melakukan hal tertentu) untuk akses data",
+    "dokumen_sumber": "Piagam Otorisasi atau laporan TI terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 39,
+    "kebutuhan_data": "Kebijakan dan metode khusus untuk mengevaluasi tingkat kepatuhan terhadap kebijakan risiko (tingkat kepatuhan: rasio pegawai yang tidak melanggar peraturan perusahaan terhadap total jumlah pegawai di perusahaan)",
+    "dokumen_sumber": "Daftar pelanggaran kepatuhan dan kebijakan Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 40,
+    "kebutuhan_data": "Pedoman komunikasi eksternal tentang Risiko dan kepatuhan",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 41,
+    "kebutuhan_data": "Contoh rencana mitigasi dan hasil pada tahun buku terakhir",
+    "dokumen_sumber": "Kutipan dari Laporan tahunan; Laporan Manajemen Risiko, Notulen rapat untuk masalah terkait Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 42,
+    "kebutuhan_data": "Laporan dan analisis tentang 1 s.d 2 Risiko utama yang berhasil dimitigasi oleh BUMN dan 1 s.d 2 Risiko utama yang gagal dikelola",
+    "dokumen_sumber": "Kutipan dari Laporan tahunan; Laporan Manajemen Risiko, Notulen rapat untuk masalah terkait Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 43,
+    "kebutuhan_data": "Daftar peristiwa Risiko utama dan langkah-langkah mitigasi beserta informasi terkait unit pemilik Risiko",
+    "dokumen_sumber": "Notulen rapat untuk masalah terkait Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 44,
+    "kebutuhan_data": "Peraturan dan kebijakan yang terkait dengan independensi organ pengelola Risiko",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 45,
+    "kebutuhan_data": "Kriteria untuk menilai objektivitas dan independensi pemangku kepentingan utama",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 46,
+    "kebutuhan_data": "Dokumen yang relevan yang dapat menunjukkan contingency plan yang ada",
+    "dokumen_sumber": "Contingency plan",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 47,
+    "kebutuhan_data": "Catatan respons terbaru terhadap krisis ekstrem (misalnya pandemi global)",
+    "dokumen_sumber": "Kutipan dari Laporan tahunan; Laporan Manajemen Risiko; Notulen rapat untuk masalah terkait Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 48,
+    "kebutuhan_data": "Pelatihan wajib dan pilihan yang dilaksanakan tahun lalu, yang terkait dengan Manajemen Risiko (Pelatihan pilihan: pelatihan yang dapat dipilih peserta untuk diikuti sesuai dengan minat dan kebutuhan mereka)",
+    "dokumen_sumber": "Pelatihan Risiko, misalnya, program akademi Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 49,
+    "kebutuhan_data": "Infrastruktur Risiko, termasuk aplikasi, model Risiko, dan platform teknologi yang diadopsi oleh BUMN",
+    "dokumen_sumber": "Daftar infrastruktur risiko, model, dll.,",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 50,
+    "kebutuhan_data": "Pengumpulan daftar data terkait Risiko dan pendekatan untuk menganalisisnya",
+    "dokumen_sumber": "Inventaris peristiwa Risiko, Pedoman untuk menganalisis peristiwa Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 51,
+    "kebutuhan_data": "Kebijakan yang relevan terkait dengan kerahasiaan data, Risiko siber dan pernyataan yang berkaitan dengan tanggung jawab yang terkait dengan data yang dikumpulkan",
+    "dokumen_sumber": "Kebijakan tata kelola data",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 52,
+    "kebutuhan_data": "Struktur organisasi",
+    "dokumen_sumber": "Organisasi, kebijakan pengendalian internal",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 53,
+    "kebutuhan_data": "Laporan tahunan selama 3 tahun terakhir",
+    "dokumen_sumber": "Laporan tahunan selama 3 tahun terakhir",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 54,
+    "kebutuhan_data": "KRI yang didefinisikan untuk tingkat Risiko T3",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko dan prosedur terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 55,
+    "kebutuhan_data": "Proses identifikasi Risiko meliputi langkah-langkah untuk mengukur Risiko, sistem yang digunakan untuk memantau Risiko, sistem yang digunakan untuk melaporkan Risiko",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko dan prosedur terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 56,
+    "kebutuhan_data": "Matriks penilaian Risiko (Risk scoring matrix) BUMN dalam menggunakan prinsip-prinsip desain matriks utama (risk scoring matrix: model atau alat yang digunakan untuk mengukur dan menentukan peringkat tingkat severity atau ruang lingkup dampak dari serangkaian Risiko tertentu)",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko dan prosedur terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 57,
+    "kebutuhan_data": "Sistem penilaian dampak diberlakukan untuk penilaian Risiko inheren. Panduan yang digunakan untuk penilaian efektivitas kontrol dalam mengestimasi Risiko residual",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko dan prosedur terkait",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 58,
+    "kebutuhan_data": "Database utama yang digunakan dalam menyusun profil Risiko",
+    "dokumen_sumber": "Database peristiwa Risiko historis",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 59,
+    "kebutuhan_data": "Langkah mitigasi yang digunakan oleh BUMN",
+    "dokumen_sumber": "Prosedur mitigasi Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 60,
+    "kebutuhan_data": "Contoh studi kasus nyata dengan pengembangan pengaturan mitigasi Risiko. Instruksi bagaimana BUMN memastikan hubungan antara pengaturan mitigasi Risiko dengan penilaian matriks Risiko",
+    "dokumen_sumber": "Prosedur mitigasi Risiko; instruksi",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 61,
+    "kebutuhan_data": "Contoh kasus evaluasi Risiko T3 dan tindakan mitigasi yang dilakukan untuk Risiko yang ditentukan",
+    "dokumen_sumber": "Contoh kasus Risiko T3",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 62,
+    "kebutuhan_data": "Daftar/deskripsi platform pemrosesan/analisis Risiko yang digunakan BUMN",
+    "dokumen_sumber": "Daftar/deskripsi platform pemrosesan/analisis Risiko yang digunakan BUMN",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 63,
+    "kebutuhan_data": "Daftar/deskripsi algoritma/formula yang digunakan untuk analisis Risiko",
+    "dokumen_sumber": "Daftar/deskripsi algoritma/formula untuk analisis Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 64,
+    "kebutuhan_data": "Info mengenai platform database Risiko yang digunakan BUMN termasuk struktur database",
+    "dokumen_sumber": "Inventaris/database peristiwa Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 65,
+    "kebutuhan_data": "Desain dashboard Manajemen Risiko",
+    "dokumen_sumber": "Contoh dashboard Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 66,
+    "kebutuhan_data": "Platform/alat visualisasi yang sedang digunakan",
+    "dokumen_sumber": "Contoh platform/alat visualisasi",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 67,
+    "kebutuhan_data": "Daftar sumber input data terkait Risiko utama",
+    "dokumen_sumber": "Daftar sumber input data utama terkait Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 68,
+    "kebutuhan_data": "Daftar sistem input data yang digunakan",
+    "dokumen_sumber": "Daftar sistem input data yang digunakan",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 69,
+    "kebutuhan_data": "Daftar alat konsolidasi/pemrosesan data yang digunakan BUMN",
+    "dokumen_sumber": "Daftar alat konsolidasi/pemrosesan",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 70,
+    "kebutuhan_data": "Daftar persyaratan keamanan, privasi, peraturan yang Anda miliki",
+    "dokumen_sumber": "Kebijakan tata kelola data",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 71,
+    "kebutuhan_data": "Pernyataan selera Risiko (Risk Appetite Statement) terkini / terbaru",
+    "dokumen_sumber": "Dokumen pernyataan selera risiko/ Risk Appetite Statements",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 72,
+    "kebutuhan_data": "Risk dashboard yang dipresentasikan/dilaporkan ke Direksi (contoh terkini, misal Berita acara/minutes of meeting)",
+    "dokumen_sumber": "Contoh dashboard",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 73,
+    "kebutuhan_data": "Risk dashboard yang dipresentasikan/dilaporkan kepada Dewan Komisaris ((contoh terkini, misal Berita acara/minutes of meeting) serta kriteria mengenai jenis masalah/isu Risiko yang dieskalasikan kepada Dewan Komisaris (jika ada)",
+    "dokumen_sumber": "Contoh dashboard; berita acara rapat Dewan Komisaris",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 74,
+    "kebutuhan_data": "Contoh KPI terkait Risiko yang digunakan untuk checking Lini Pertama seperti: Kepala unit dan Relationship Manager (RM) di segmen Ritel/UMK/Komersial",
+    "dokumen_sumber": "Deskripsi pekerjaan dan KPI untuk pegawai / divisi Lini Pertama (misal Relationship Manager)",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 75,
+    "kebutuhan_data": "Deskripsi pelatihan Risiko yang diberikan kepada staf Lini Pertama (terutama fungsi Bisnis dan TI)",
+    "dokumen_sumber": "Daftar pelatihan yang diberikan kepada pegawai/divisi Lini Pertama",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 76,
+    "kebutuhan_data": "Contoh pelatihan untuk staf Lini Kedua dan Lini Ketiga mengenai topik khusus (misalnya, keamanan siber, perubahan iklim)",
+    "dokumen_sumber": "Daftar pelatihan yang diberikan kepada pegawai/divisi Lini Kedua dan Lini Ketiga.",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 77,
+    "kebutuhan_data": "Daftar model Probability of Default/PD (yaitu, a-score, b-score, scorecard) untuk setiap segmen bisnis, dan bagaimana model-model tersebut digunakan dalam pengambilan keputusan",
+    "dokumen_sumber": "Dokumen inventaris model",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 78,
+    "kebutuhan_data": "Daftar model Exposure at Default/EAD dan Loss Given Default/LGD untuk setiap segmen bisnis",
+    "dokumen_sumber": "Dokumen inventaris model",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 79,
+    "kebutuhan_data": "Daftar model pengambilan keputusan kredit lainnya (misalnya, Early Warning System/EWS, monitoring, penagihan, pre-screening dan penargetan nasabah, penghitungan limit, next-best-product / cross-selling) untuk setiap segmen bisnis",
+    "dokumen_sumber": "Dokumen inventaris model",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 80,
+    "kebutuhan_data": "Tanggal pengembangan model (tahun/bulan ketika disetujui untuk digunakan) dan tanggal validasi terakhir (bulan validasi tahunan terakhir)",
+    "dokumen_sumber": "Dokumen inventaris model",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 81,
+    "kebutuhan_data": "Rasio GINI pada model di tahap pengembangan awal dan pada validasi terakhir",
+    "dokumen_sumber": "Laporan validasi model",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 82,
+    "kebutuhan_data": "Daftar segmen yang memiliki sistem Early Warning System/EWS yang menggunakan model analitik (misalnya, b-score)",
+    "dokumen_sumber": "Dokumen mengenai EWS",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 83,
+    "kebutuhan_data": "Besaran persentase Day Past Due/DPD pada nasabah yang tidak masuk dalam watchlist (tidak terdeteksi Early Warning System/EWS) berdasarkan segmen bisnis.",
+    "dokumen_sumber": "Laporan DPD; Laporan EWS",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 84,
+    "kebutuhan_data": "Tingkat pemulihan total untuk 0-90 DPD dan >90 DPD berdasarkan segmen bisnis",
+    "dokumen_sumber": "Laporan DPD",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 85,
+    "kebutuhan_data": "Deskripsi peran Lini Kedua dalam (a) Analisis Kredit dan (b) Keputusan Kredit di setiap lini bisnis",
+    "dokumen_sumber": "Kebijakan Manajemen Risiko; uraian tugas pegawai Risiko yang terlibat dalam analisis kredit/keputusan kredit",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 86,
+    "kebutuhan_data": "Informasi mengenai penggunaan 'pengambilan keputusan kredit otomatis' di segmen Ritel dan UKM (sepenuhnya berdasarkan model tanpa memerlukan tindakan manusia), dan besaran persentase jumlah keputusan yang diotomatisasi",
+    "dokumen_sumber": "SOP keputusan kredit yang menunjukkan kebijakan dan prosedur; pedoman/petunjuk/manual penggunaan solusi teknologi yang digunakan dalam proses keputusan kredit",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 87,
+    "kebutuhan_data": "Informasi mengenai penggunaan data dan analitik untuk menyarankan tindakan dan strategi penagihan terbaik bagi nasabah secara otomatis",
+    "dokumen_sumber": "SOP penagihan yang menunjukkan kebijakan dan prosedur; pedoman/petunjuk/manual penggunaan solusi teknologi yang digunakan dalam proses keputusan kredit",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 88,
+    "kebutuhan_data": "Risiko iklim: Full-Time Equivalent (#FTE) yang didedikasikan untuk Risiko iklim di seluruh bank (misalnya, ESG/Climate center of excellence; analis Risiko iklim)",
+    "dokumen_sumber": "Struktur organisasi; daftar jumlah karyawan FTE per divisi",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 89,
+    "kebutuhan_data": "Keamanan siber: Full-Time Equivalent (#FTE) yang didedikasikan untuk keamanan siber (misalnya, CISO dan timnya; tata kelola keamanan siber dan tim Manajemen Risiko; pusat operasi keamanan (SOC); Tim audit siber)",
+    "dokumen_sumber": "Struktur organisasi; daftar jumlah karyawan FTE per divisi",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 90,
+    "kebutuhan_data": "Informasi mengenai cakupan 24/7 untuk pemantauan keamanan siber melalui Pusat Operasi Keamanan (Security Operations Center)",
+    "dokumen_sumber": "Laporan tahunan; SOP keamanan siber",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 91,
+    "kebutuhan_data": "Penjelasan pendekatan untuk menentukan behavioural maturity untuk liabilitas dan aset untuk manajemen risiko liabilitas dan Asset Liability Management/ALM (misalnya, segmen",
+    "dokumen_sumber": "Laporan ALM; SOP proses ALM / manual teknis penggunaan model",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 92,
+    "kebutuhan_data": "Deskripsi 3 Risiko operasional teratas serta inisiatif dan tindakan utama untuk memitigasinya",
+    "dokumen_sumber": "Laporan profil Risiko; Rapat komite Manajemen Risiko",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 93,
+    "kebutuhan_data": "Informasi mengenai penggunaan data dan analitik untuk mendeteksi dan mencegah fraud internal dan eksternal secara otomatis serta beberapa kasus utama penerapan solusi/teknologi otomatisasi)",
+    "dokumen_sumber": "SOP manajemen fraud; laporan tahunan; instruksi/pedoman/manual untuk solusi teknologi yang digunakan dalam kontrol dan proses anti-fraud",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 94,
+    "kebutuhan_data": "Contoh sistem terintegrasi umum (jika ada, misalnya dashboard) yang digunakan untuk pemantauan Risiko dan daftar divisi yang memiliki akses ke dashboard untuk pemantauan secara real-time",
+    "dokumen_sumber": "Contoh dashboard; pedoman/manual dashboard (dengan hak akses)",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 95,
+    "kebutuhan_data": "Contoh Laporan Audit Internal: Kekurangan yang dicatat, tindakan korektif yang diambil, dan keterlibatan Direksi",
+    "dokumen_sumber": "Laporan internal audit",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 3,
+    "kebutuhan_data": "Program peningkatan keahlian Risiko",
+    "dokumen_sumber": "8,9,48,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 5,
+    "kebutuhan_data": "Tingkat kematangan organ pengelola risiko",
+    "dokumen_sumber": "19,20,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 7,
+    "kebutuhan_data": "Eskalasi permasalahan kepada Dewan Komisaris/Dewan Pengawas",
+    "dokumen_sumber": "11,13,53,72,73",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 8,
+    "kebutuhan_data": "Tingkat pemahaman Risiko di jajaran Dewan Komisaris/Dewan Pengawas",
+    "dokumen_sumber": "13,14,15",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 9,
+    "kebutuhan_data": "Peran komite-komite di bawah Dewan Komisaris/Dewan Pengawas",
+    "dokumen_sumber": "11,13,14,15,16,19, 52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 10,
+    "kebutuhan_data": "Pengurusan aktif Direksi dalam pengelolaan Risiko",
+    "dokumen_sumber": "3,6,11,13,17,18,21, 24,25,27,44,45,46, 47,51,71,72",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 11,
+    "kebutuhan_data": "Mandat, wewenang, dan independensi fungsi manajemen risiko untuk memantau semua Risiko",
+    "dokumen_sumber": "19,22,44,45,52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 12,
+    "kebutuhan_data": "Efektivitas fungsi pengelola risiko dalam menjalankan tugasnya",
+    "dokumen_sumber": "22,24,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 14,
+    "kebutuhan_data": "Peran dan fungsi Lini Pertama",
+    "dokumen_sumber": "17,34,43,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 15,
+    "kebutuhan_data": "Peran dan fungsi Lini Kedua",
+    "dokumen_sumber": "1,3,4,5,6,19,22,23, 24,25,28,29,32,34, 35,36,39,52,53,",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 16,
+    "kebutuhan_data": "Peran dan fungsi Lini Ketiga",
+    "dokumen_sumber": "19,20,22,23,28,52, 53,95",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 17,
+    "kebutuhan_data": "Interaksi antara fungsi Risiko dan Assurance (kepatuhan, legal, audit)",
+    "dokumen_sumber": "22,23,52, 53,95",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 18,
+    "kebutuhan_data": "Peran dan fungsi Tata Kelola Risiko Terintegrasi",
+    "dokumen_sumber": "3,6,12,19,73",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 19,
+    "kebutuhan_data": "Monitoring risiko entitas induk sampai ke entitas anak",
+    "dokumen_sumber": "6,22,52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 21,
+    "kebutuhan_data": "Rencana transformasi Enterprise Risk Management",
+    "dokumen_sumber": "27,28,30",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 22,
+    "kebutuhan_data": "Peran Manajemen Risiko dalam penyusunan rencana strategis",
+    "dokumen_sumber": "2,3,4,10,12,25,29,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 23,
+    "kebutuhan_data": "Hubungan peran Manajemen Risiko terhadap pencapaian target strategis RKAP",
+    "dokumen_sumber": "2,3,4,10,12,25,29,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 24,
+    "kebutuhan_data": "Kapasitas risiko",
+    "dokumen_sumber": "1,2,6,25,30,31,32,35, 53,55,56",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 25,
+    "kebutuhan_data": "Selera Risiko",
+    "dokumen_sumber": "1,2,6,25,31,32,33,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 26,
+    "kebutuhan_data": "Komunikasi selera Risiko kepada pemangku kepentingan eksternal",
+    "dokumen_sumber": "1,33,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 28,
+    "kebutuhan_data": "Prosedur Risiko",
+    "dokumen_sumber": "9,11,21,24,40,42,53, 59,60,61,65",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 29,
+    "kebutuhan_data": "Rencana darurat (contingency plan) dalam kondisi terburuk (worst case scenario);",
+    "dokumen_sumber": "9,21,41,42,43,46,47, 53,59,60,61,70",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 30,
+    "kebutuhan_data": "Reviu dan Stress test terhadap prosedur dan SOP",
+    "dokumen_sumber": "24,27,28,36,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 36,
+    "kebutuhan_data": "Kerangka proses pengukuran Risiko untuk prioritisasi Risiko",
+    "dokumen_sumber": "25,35,53,55,56,57,58",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 39,
+    "kebutuhan_data": "Proses identifikasi dan pengelolaan eksposur Risiko yang berada diatas selera risiko",
+    "dokumen_sumber": "5,30,31,35,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 3,
+    "kebutuhan_data": "Program peningkatan keahlian Risiko",
+    "dokumen_sumber": "8,9,48,53, 75,76",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 5,
+    "kebutuhan_data": "Tingkat kematangan organ pengelola risiko",
+    "dokumen_sumber": "5,14,16,17,18,19,20, 22,44,52",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 7,
+    "kebutuhan_data": "Eskalasi permasalahan kepada Dewan Komisaris",
+    "dokumen_sumber": "53,72,73",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 8,
+    "kebutuhan_data": "Tingkat pemahaman Risiko di jajaran Dewan Komisaris",
+    "dokumen_sumber": "11,13,53,",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 9,
+    "kebutuhan_data": "Peran komite-komite di bawah Dewan Komisaris",
+    "dokumen_sumber": "72,73",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 10,
+    "kebutuhan_data": "Pengurusan aktif Direksi dalam pengelolaan Risiko",
+    "dokumen_sumber": "3,6,11,13,17,18,21,24, 25,27,44,45,46,47,51, 71,72",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 11,
+    "kebutuhan_data": "Mandat, wewenang, dan independensi fungsi manajemen risiko untuk memantau semua Risiko",
+    "dokumen_sumber": "19,22,44,45,52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 12,
+    "kebutuhan_data": "Efektivitas fungsi pengelola risiko dalam menjalankan tugasnya",
+    "dokumen_sumber": "22,24,53,85",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 14,
+    "kebutuhan_data": "Peran dan fungsi Lini Pertama",
+    "dokumen_sumber": "17,34,43,53,74",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 15,
+    "kebutuhan_data": "Peran dan fungsi Lini Kedua",
+    "dokumen_sumber": "1,3,4,5,6,19,22,23,24, 25,28,29,32,34,35,36, 39,52,53,85",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 16,
+    "kebutuhan_data": "Peran dan fungsi Lini Ketiga",
+    "dokumen_sumber": "19,20,22,23,28,52,53, 93,95",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 17,
+    "kebutuhan_data": "Interaksi antara fungsi Risiko dan Assurance (kepatuhan, legal, audit)",
+    "dokumen_sumber": "22,23,52,53,95",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 18,
+    "kebutuhan_data": "Peran dan fungsi Tata Kelola Risiko Terintegrasi",
+    "dokumen_sumber": "3,6,12,19,73",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 19,
+    "kebutuhan_data": "Monitoring risiko entitas induk sampai ke entitas anak",
+    "dokumen_sumber": "6,22,52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 21,
+    "kebutuhan_data": "Rencana transformasi Enterprise Risk Management",
+    "dokumen_sumber": "27,28,30,88",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 22,
+    "kebutuhan_data": "Peran Manajemen Risiko dalam penyusunan rencana strategis",
+    "dokumen_sumber": "2,3,4,10,12,29,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 23,
+    "kebutuhan_data": "Hubungan peran Manajemen Risiko terhadap pencapaian target strategis RKAP",
+    "dokumen_sumber": "2,3,4,10,12,29,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 24,
+    "kebutuhan_data": "Kapasitas risiko",
+    "dokumen_sumber": "1,2,6,25,30,31,32,35, 53,55,56",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 25,
+    "kebutuhan_data": "Selera risiko",
+    "dokumen_sumber": "1,2,6,25,31,53,71",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 26,
+    "kebutuhan_data": "Komunikasi selera Risiko kepada pemangku kepentingan eksternal",
+    "dokumen_sumber": "1,33,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 28,
+    "kebutuhan_data": "Kebijakan dan/atau prosedur untuk mitigasi peristiwa penting terkait kerahasiaan data",
+    "dokumen_sumber": "9,21,24,40,41,42,43, 51,59,60,61,70,89,90",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 29,
+    "kebutuhan_data": "Rencana darurat (contingency plan) dalam kondisi terburuk (worst case scenario);",
+    "dokumen_sumber": "9,21,41,42,46,47,53, 59,60,61,70",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 30,
+    "kebutuhan_data": "Reviu dan Stress test terhadap prosedur dan SOP",
+    "dokumen_sumber": "24,27,28,36,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 36,
+    "kebutuhan_data": "Integrasi atas seluruh Risiko utama",
+    "dokumen_sumber": "4,5,6,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 38,
+    "kebutuhan_data": "Identifikasi dan pengelolaan eksposur Risiko yang berada diatas selera risiko",
+    "dokumen_sumber": "5,30,31,35,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 41,
+    "kebutuhan_data": "Sistem informasi Manajemen Risiko",
+    "dokumen_sumber": "26,38,49,51,64,65,66, 67,68,69",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 3,
+    "kebutuhan_data": "Program peningkatan keahlian Risiko",
+    "dokumen_sumber": "8,9,48,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 5,
+    "kebutuhan_data": "Tingkat kematangan organ pengelola risiko",
+    "dokumen_sumber": "19,20,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 8,
+    "kebutuhan_data": "Tingkat pemahaman Risiko di jajaran Dewan Komisaris",
+    "dokumen_sumber": "13,14,15",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 9,
+    "kebutuhan_data": "Peran komite-komite di bawah Dewan Komisaris",
+    "dokumen_sumber": "13,14,15,16,19,52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 10,
+    "kebutuhan_data": "Pengurusan aktif Direksi dalam pengelolaan Risiko",
+    "dokumen_sumber": "3,6,11,13,17,18, 21,24,25,27,44, 45,46,47,51,71,72",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 11,
+    "kebutuhan_data": "Mandat, wewenang, dan independensi fungsi manajemen risiko untuk memantau semua Risiko",
+    "dokumen_sumber": "19,22,44,45,52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 12,
+    "kebutuhan_data": "Efektivitas fungsi pengelola risiko dalam menjalankan tugasnya",
+    "dokumen_sumber": "22,24,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 14,
+    "kebutuhan_data": "Peran dan fungsi Lini Pertama",
+    "dokumen_sumber": "17,34,43, 53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 15,
+    "kebutuhan_data": "Peran dan fungsi Lini Kedua",
+    "dokumen_sumber": "1,3,4,5,6,19,22,23, 24,25,28,29,32,34, 35,36,39,52,53,",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 16,
+    "kebutuhan_data": "Peran dan fungsi Lini Ketiga",
+    "dokumen_sumber": "19,20,22,23,28,52, 53,95",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 17,
+    "kebutuhan_data": "Interaksi antara fungsi Risiko dan Assurance (kepatuhan, legal, audit)",
+    "dokumen_sumber": "22,23,52, 53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 18,
+    "kebutuhan_data": "Peran dan fungsi Tata Kelola Risiko Terintegrasi",
+    "dokumen_sumber": "3,6,12,19,73",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 19,
+    "kebutuhan_data": "Monitoring risiko entitas induk sampai ke entitas anak",
+    "dokumen_sumber": "6,22,52,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 21,
+    "kebutuhan_data": "Rencana transformasi Enterprise Risk Management",
+    "dokumen_sumber": "27,28,30",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 22,
+    "kebutuhan_data": "Peran Manajemen Risiko dalam penyusunan rencana strategis",
+    "dokumen_sumber": "2,3,4,10, 12,29,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 23,
+    "kebutuhan_data": "Hubungan peran Manajemen Risiko terhadap pencapaian target strategis RKAP",
+    "dokumen_sumber": "2,3,4,10, 12,29,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 24,
+    "kebutuhan_data": "Kapasitas risiko",
+    "dokumen_sumber": "1,2,6,25,30,31,32,35, 53,55,56",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 25,
+    "kebutuhan_data": "Selera risiko",
+    "dokumen_sumber": "1,2,6,25,31,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 26,
+    "kebutuhan_data": "Komunikasi selera Risiko kepada pemangku kepentingan eksternal",
+    "dokumen_sumber": "1,33,53",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 28,
+    "kebutuhan_data": "Kebijakan dan/atau prosedur untuk mitigasi peristiwa penting terkait kerahasiaan data",
+    "dokumen_sumber": "9,21,24,40,41,42,43, 51,59,60,61,70",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 29,
+    "kebutuhan_data": "Rencana darurat (contingency plan) dalam kondisi terburuk (worst case scenario);",
+    "dokumen_sumber": "9,21,41,42,46,47,53, 59,60,61,70",
+    "tersedia": false,
+    "catatan": ""
+  },
+  {
+    "id": 30,
+    "kebutuhan_data": "Reviu dan Stress test terhadap prosedur dan SOP",
+    "dokumen_sumber": "24,27,28,36,53",
+    "tersedia": false,
+    "catatan": ""
+  }
+]
