@@ -187,37 +187,37 @@
   scrollbar-width: none;
 }
 
-/* Full Animate Keyframes */
+/* Full Animate Keyframes (GPU Hardware Accelerated translate3d) */
 @keyframes floatOrb1 {
   0%, 100% {
-    transform: translate(0px, 0px) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
   33% {
-    transform: translate(30px, -45px) scale(1.12);
+    transform: translate3d(30px, -40px, 0) scale(1.08);
   }
   66% {
-    transform: translate(-25px, 20px) scale(0.94);
+    transform: translate3d(-25px, 20px, 0) scale(0.96);
   }
 }
 
 @keyframes floatOrb2 {
   0%, 100% {
-    transform: translate(0px, 0px) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
   40% {
-    transform: translate(-40px, 35px) scale(1.18);
+    transform: translate3d(-35px, 30px, 0) scale(1.1);
   }
   75% {
-    transform: translate(30px, -30px) scale(0.92);
+    transform: translate3d(25px, -25px, 0) scale(0.95);
   }
 }
 
 @keyframes floatOrb3 {
   0%, 100% {
-    transform: translate(0px, 0px) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: translate(25px, -30px) scale(1.1);
+    transform: translate3d(25px, -30px, 0) scale(1.06);
   }
 }
 
@@ -232,23 +232,26 @@
 
 @keyframes pulseGlowRing {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(101, 49, 247, 0.4);
+    box-shadow: 0 0 0 0 rgba(101, 49, 247, 0.35);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(101, 49, 247, 0);
+    box-shadow: 0 0 0 8px rgba(101, 49, 247, 0);
   }
 }
 
 .animate-orb-1 {
-  animation: floatOrb1 20s ease-in-out infinite;
+  will-change: transform;
+  animation: floatOrb1 26s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
 }
 
 .animate-orb-2 {
-  animation: floatOrb2 25s ease-in-out infinite;
+  will-change: transform;
+  animation: floatOrb2 30s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
 }
 
 .animate-orb-3 {
-  animation: floatOrb3 22s ease-in-out infinite;
+  will-change: transform;
+  animation: floatOrb3 28s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
 }
 
 .animate-glow-ring {

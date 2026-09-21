@@ -233,30 +233,25 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       }`}
                       title={isCollapsed ? `${item.label} (${item.sublabel})` : undefined}
                     >
-                      {/* Animated Active Gliding Pill Background */}
+                      {/* Unified Animated Active Gliding Pill & Purple Bar */}
                       {isActive && (
                         <motion.div
                           layoutId="activeSidebarPill"
-                          className="absolute inset-0 bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-white/90 -z-10"
-                          transition={{ type: 'spring', stiffness: 450, damping: 35 }}
-                        />
-                      )}
-
-                      {/* Left purple indicator line (exact from UI kit) */}
-                      {!isCollapsed && isActive && (
-                        <motion.div
-                          layoutId="activeSidebarBar"
-                          className="w-1 h-5 bg-[#6531F7] rounded-full mr-2 shrink-0 shadow-[0_0_8px_rgba(101,49,247,0.6)]"
-                          transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-                        />
+                          className="absolute inset-0 bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-white/90 -z-10 flex items-center pl-2.5 pointer-events-none"
+                          transition={{ type: 'spring', stiffness: 360, damping: 32 }}
+                        >
+                          {!isCollapsed && (
+                            <div className="w-1 h-5 bg-[#6531F7] rounded-full shadow-[0_0_8px_rgba(101,49,247,0.6)]" />
+                          )}
+                        </motion.div>
                       )}
 
                       <Icon
-                        className={`w-4 h-4 shrink-0 transition-colors ${
+                        className={`w-4 h-4 shrink-0 transition-colors ml-3 ${
                           isActive
                             ? 'text-[#6531F7]'
                             : 'text-slate-400 group-hover:text-slate-700'
-                        } ${!isCollapsed && !isActive ? 'ml-3' : ''}`}
+                        }`}
                       />
 
                       {!isCollapsed && (

@@ -111,11 +111,11 @@ export const RadarChart: React.FC<RadarChartProps> = ({
           strokeDasharray="4,4"
         />
 
-        {/* Actual Score Polygon (Animated Spring & Radiant Fill) */}
+        {/* Actual Score Polygon (Animated Smooth Scale & Radiant Fill) */}
         <motion.polygon
-          initial={{ opacity: 0, scale: 0.6 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{ transformOrigin: `${center}px ${center}px` }}
           points={actualPoints}
           fill="url(#radarFillPurple)"
@@ -123,7 +123,7 @@ export const RadarChart: React.FC<RadarChartProps> = ({
           strokeWidth="2.5"
         />
 
-        {/* Data points (Purple Dots with Animated Pop & Glow Ring) */}
+        {/* Data points (Purple Dots with Smooth Spring Pop) */}
         {dimensions.map((d, i) => {
           const pt = getPoint(i, Math.max(0, Math.min(5, d.score)));
           return (
@@ -132,7 +132,7 @@ export const RadarChart: React.FC<RadarChartProps> = ({
               filter="url(#glowNode)"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.15 + i * 0.08, type: 'spring', stiffness: 350, damping: 20 }}
+              transition={{ delay: 0.08 + i * 0.04, type: 'spring', stiffness: 320, damping: 24 }}
               style={{ transformOrigin: `${pt.x}px ${pt.y}px` }}
             >
               <circle
@@ -142,15 +142,6 @@ export const RadarChart: React.FC<RadarChartProps> = ({
                 fill="#6531F7"
                 stroke="#FFFFFF"
                 strokeWidth="2.5"
-              />
-              <circle
-                cx={pt.x}
-                cy={pt.y}
-                r="9"
-                fill="none"
-                stroke="#6531F7"
-                strokeWidth="1.2"
-                opacity="0.35"
               />
             </motion.g>
           );
