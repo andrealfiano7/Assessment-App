@@ -114,9 +114,12 @@ export interface CompleteAssessmentData {
 
 export interface SurveyQuestion {
   id: string;
+  paramId: number;
   dimNum: number;
   dimName: string;
-  subtopic: string;
+  subdim: string;
+  paramTitle: string;
+  subtopic?: string;
   question: string;
 }
 

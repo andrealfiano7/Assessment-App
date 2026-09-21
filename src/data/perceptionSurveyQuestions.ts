@@ -1,156 +1,171 @@
-import { SurveyQuestion } from '../types/rmi';
+import { SurveyQuestion, IndustryModel, RmiParameter } from '../types/rmi';
+import { getParametersForModel } from '../utils/storage';
 
-export const SURVEY_QUESTIONS: SurveyQuestion[] = [
+// Peta Authoritative Kalimat Pertanyaan Kuesioner untuk Tiap Parameter (P.1 s.d. P.42)
+const PARAMETER_QUESTION_MAP: Record<string, string> = {
   // DIMENSI 1: Budaya dan Kapabilitas Risiko
-  {
-    id: 'D1_Q1',
-    dimNum: 1,
-    dimName: 'Budaya dan Kapabilitas Risiko',
-    subtopic: 'Keteladanan Pimpinan (Tone from the Top)',
-    question: 'Pimpinan (Dewan Komisaris & Direksi) secara aktif dan konsisten menunjukkan keteladanan serta mengomunikasikan pentingnya manajemen risiko dalam pengambilan keputusan bisnis.'
-  },
-  {
-    id: 'D1_Q2',
-    dimNum: 1,
-    dimName: 'Budaya dan Kapabilitas Risiko',
-    subtopic: 'Kesadaran & Tanggung Jawab Pegawai',
-    question: 'Seluruh pegawai di unit kerja saya memiliki kesadaran risiko yang baik dan memahami bahwa pengelolaan risiko merupakan bagian dari tanggung jawab pekerjaannya sehari-hari.'
-  },
-  {
-    id: 'D1_Q3',
-    dimNum: 1,
-    dimName: 'Budaya dan Kapabilitas Risiko',
-    subtopic: 'Program Pelatihan & Sertifikasi',
-    question: 'Perusahaan menyediakan program pelatihan, sosialisasi, atau sertifikasi manajemen risiko secara rutin, berkualitas, dan relevan dengan tingkat jabatan/kebutuhan unit kerja.'
-  },
-  {
-    id: 'D1_Q4',
-    dimNum: 1,
-    dimName: 'Budaya dan Kapabilitas Risiko',
-    subtopic: 'Apresiasi & Budaya Keterbukaan',
-    question: 'Perusahaan memiliki budaya keterbukaan (open risk culture) dalam melaporkan potensi risiko/kegagalan tanpa takut disalahkan, serta memberikan apresiasi bagi inisiatif pengelolaan risiko yang baik.'
-  },
+  'Internalisasi budaya Risiko dalam budaya perusahaan':
+    'Sejauh mana budaya risiko telah diinternalisasikan dan ditanamkan ke dalam perilaku serta kegiatan operasional sehari-hari seluruh pegawai perusahaan?',
+  'Peran Penilaian RMI dalam upaya peningkatan praktik Manajemen Risiko':
+    'Bagaimana efektivitas dan keberlanjutan pelaksanaan Penilaian RMI dalam mendorong perbaikan nyata praktik manajemen risiko perusahaan?',
+  'Program peningkatan keahlian Risiko':
+    'Apakah program peningkatan keahlian dan pelatihan manajemen risiko telah diselenggarakan secara rutin, komprehensif, dan menjangkau seluruh tingkatan pegawai?',
 
   // DIMENSI 2: Organisasi dan Tata Kelola Risiko
-  {
-    id: 'D2_Q1',
-    dimNum: 2,
-    dimName: 'Organisasi dan Tata Kelola Risiko',
-    subtopic: 'Penerapan Model Tiga Lini (Three Lines)',
-    question: 'Pembagian peran Tiga Lini (Lini 1: Operasional, Lini 2: Risk & Compliance, Lini 3: Audit Internal) telah dipahami dan berjalan efektif tanpa tumpang tindih tanggung jawab.'
-  },
-  {
-    id: 'D2_Q2',
-    dimNum: 2,
-    dimName: 'Organisasi dan Tata Kelola Risiko',
-    subtopic: 'Peran Komite Pengawas Risiko',
-    question: 'Komite Pemantau Risiko (Dewan Komisaris) dan Komite Manajemen Risiko (Direksi) secara rutin mengkaji profil risiko dan memberikan rekomendasi strategis yang ditindaklanjuti nyata.'
-  },
-  {
-    id: 'D2_Q3',
-    dimNum: 2,
-    dimName: 'Organisasi dan Tata Kelola Risiko',
-    subtopic: 'Independensi & Wewenang Lini Kedua',
-    question: 'Fungsi Manajemen Risiko (Lini 2) memiliki kewenangan, independensi, dan sumber daya personel yang memadai untuk menantang (challenge) keputusan bisnis yang berisiko tinggi.'
-  },
-  {
-    id: 'D2_Q4',
-    dimNum: 2,
-    dimName: 'Organisasi dan Tata Kelola Risiko',
-    subtopic: 'Mekanisme Eskalasi Masalah',
-    question: 'Terdapat kriteria dan jalur eskalasi isu risiko yang jelas dan cepat dari tingkat operasional ke Direksi/Komisaris apabila terjadi peristiwa risiko yang melewati ambang batas.'
-  },
+  'Efektivitas fungsi pengelola risiko':
+    'Seberapa efektif fungsi pengelola risiko dalam mengoordinasikan, memfasilitasi, dan mengawasi pelaksanaan manajemen risiko di seluruh unit kerja perusahaan?',
+  'Tingkat kematangan organ pengelola Risiko':
+    'Apakah kelengkapan struktur, fungsi, dan wewenang organ pengelola risiko telah memenuhi ketentuan regulasi serta klasifikasi risiko perusahaan?',
+  'Akuntabilitas organ pengelola risiko':
+    'Bagaimana kejelasan akuntabilitas, pembagian tugas, dan tanggung jawab jajaran organ pengelola risiko dalam struktur organisasi perusahaan?',
+  'Keterlibatan aktif Dewan Komisaris/ Dewan Pengawas dalam pengelolaan Risiko':
+    'Bagaimana keterlibatan aktif Dewan Komisaris / Dewan Pengawas dalam mengawasi dan memberikan arahan strategis terhadap pengelolaan risiko perusahaan?',
+  'Keterlibatan aktif Dewan Komisaris dalam pengelolaan Risiko':
+    'Bagaimana keterlibatan aktif Dewan Komisaris dalam mengawasi dan memberikan arahan strategis terhadap pengelolaan risiko perusahaan?',
+  'Eskalasi permasalahan kepada Dewan Komisaris/Dewa n Pengawas':
+    'Apakah mekanisme dan kriteria eskalasi permasalahan risiko kritikal kepada Dewan Komisaris / Dewan Pengawas telah berjalan cepat, transparan, dan terukur?',
+  'Eskalasi permasalahan kepada Dewan Komisaris':
+    'Apakah mekanisme dan kriteria eskalasi permasalahan risiko kritikal kepada Dewan Komisaris telah berjalan cepat, transparan, dan terukur?',
+  'Tingkat pemahaman Risiko di jajaran Dewan Komisaris/ Dewan Pengawas':
+    'Bagaimana tingkat pemahaman dan penguasaan teknis jajaran Dewan Komisaris / Dewan Pengawas terhadap profil risiko utama dan dinamika industri perusahaan?',
+  'Tingkat pemahaman Risiko di jajaran Dewan Komisaris':
+    'Bagaimana tingkat pemahaman dan penguasaan teknis jajaran Dewan Komisaris terhadap profil risiko utama dan dinamika industri perusahaan?',
+  'Peran komite- komite di bawah Dewan Komisaris/ Dewan Pengawas':
+    'Sejauh mana Komite Pemantau Risiko (KPR) dan komite pengawas lainnya aktif mengkaji kecukupan manajemen risiko dan memberikan rekomendasi berkala?',
+  'Peran komite- komite di bawah Dewan Komisaris':
+    'Sejauh mana Komite Pemantau Risiko (KPR) dan komite pengawas lainnya aktif mengkaji kecukupan manajemen risiko dan memberikan rekomendasi berkala?',
+  'Pengurusan aktif Direksi dalam pengelolaan Risiko':
+    'Bagaimana kepemimpinan dan komitmen aktif jajaran Direksi dalam memastikan pengelolaan risiko terintegrasi dalam setiap pengambilan keputusan bisnis?',
+  'Mandat, wewenang, dan independensi fungsi Manajemen Risiko untuk memantau semua Risiko':
+    'Apakah fungsi Manajemen Risiko memiliki mandat formal, independensi, dan wewenang yang memadai untuk memantau serta menantang (challenge) seluruh eksposur risiko?',
+  'Mandat, wewenang, dan independensi fungsi Manajemen':
+    'Apakah fungsi Manajemen Risiko memiliki mandat formal, independensi, dan wewenang yang memadai untuk memantau serta menantang (challenge) seluruh eksposur risiko?',
+  'Efektivitas fungsi pengelola risiko dalam menjalankan tugasnya':
+    'Bagaimana kinerja dan kapabilitas fungsi pengelola risiko dalam mengidentifikasi, mengukur, memitigasi, serta melaporkan eksposur risiko secara konsisten?',
+  'Penerapan Model Tata Kelola Risiko Tiga Lini':
+    'Seberapa baik penerapan Model Tata Kelola Tiga Lini (Three Lines Model) berjalan efektif tanpa tumpang tindih peran dan tanggung jawab antar-lini?',
+  'Model Tata Kelola Risiko Tiga Lini':
+    'Seberapa baik penerapan Model Tata Kelola Tiga Lini (Three Lines Model) berjalan efektif tanpa tumpang tindih peran dan tanggung jawab antar-lini?',
+  'Peran dan fungsi Lini Pertama':
+    'Apakah Lini Pertama (Unit Bisnis / Operasional) telah menjalankan perannya sebagai pemilik risiko (risk owner) dengan mengidentifikasi dan mengontrol risiko secara mandiri?',
+  'Peran dan fungsi Lini Kedua':
+    'Bagaimana efektivitas Lini Kedua (Fungsi Manajemen Risiko & Kepatuhan) dalam menyusun metodologi, kebijakan, serta memfasilitasi pengelolaan risiko korporasi?',
+  'Peran dan fungsi Lini Ketiga':
+    'Sejauh mana Lini Ketiga (Satuan Pengawas Intern / Audit) memberikan asurans independen dan objektif terhadap kecukupan tata kelola dan pengendalian risiko?',
+  'Interaksi antara fungsi Risiko dan Assurance (kepatuhan, legal, audit)':
+    'Bagaimana kualitas sinergi, koordinasi, dan pertukaran informasi (assurance integration) antara fungsi Manajemen Risiko, Kepatuhan, Legal, dan Internal Audit?',
+  'Peran dan fungsi Tata Kelola Risiko Terintegrasi':
+    'Apakah kerangka Tata Kelola Risiko Terintegrasi telah berfungsi optimal dalam menyelaraskan profil dan selera risiko antara entitas induk dan anak perusahaan?',
+  'Monitoring risiko entitas induk sampai ke entitas anak':
+    'Bagaimana efektivitas pemantauan, konsolidasi, dan pengawasan profil risiko anak perusahaan / entitas afiliasi oleh entitas induk secara berkala?',
 
   // DIMENSI 3: Kerangka Risiko dan Kepatuhan
-  {
-    id: 'D3_Q1',
-    dimNum: 3,
-    dimName: 'Kerangka Risiko dan Kepatuhan',
-    subtopic: 'Kelengkapan Kebijakan & Pedoman',
-    question: 'Pedoman, kebijakan, dan SOP manajemen risiko tersedia lengkap, mudah diakses oleh seluruh pegawai, dan secara berkala dimutakhirkan sesuai perkembangan regulasi.'
-  },
-  {
-    id: 'D3_Q2',
-    dimNum: 3,
-    dimName: 'Kerangka Risiko dan Kepatuhan',
-    subtopic: 'Penerapan Selera Risiko (Risk Appetite)',
-    question: 'Pernyataan Selera Risiko (Risk Appetite Statement) dan Batas Toleransi Risiko ditetapkan secara terukur serta dipedomani dalam persetujuan proyek/transaksi penting.'
-  },
-  {
-    id: 'D3_Q3',
-    dimNum: 3,
-    dimName: 'Kerangka Risiko dan Kepatuhan',
-    subtopic: 'Kepatuhan Regulasi & Juknis BUMN',
-    question: 'Perusahaan secara disiplin mematuhi seluruh regulasi Kementerian BUMN, peraturan perundang-undangan industri, serta standar tata kelola yang berlaku.'
-  },
-  {
-    id: 'D3_Q4',
-    dimNum: 3,
-    dimName: 'Kerangka Risiko dan Kepatuhan',
-    subtopic: 'Standarisasi Taksonomi Risiko',
-    question: 'Perusahaan menggunakan taksonomi, terminologi, dan metodologi penilaian risiko yang baku serta seragam di seluruh divisi dan anak perusahaan.'
-  },
+  'Peningkatan kualitas kerangka':
+    'Apakah kerangka kerja manajemen risiko (Risk Framework) secara berkala dievaluasi dan ditingkatkan kualitasnya sesuai standar praktik terbaik industri?',
+  'Peningkatan kualitas kerangka Manajemen Risiko':
+    'Apakah kerangka kerja manajemen risiko (Risk Framework) secara berkala dievaluasi dan ditingkatkan kualitasnya sesuai standar praktik terbaik industri?',
+  'Rencana transformasi Enterprise Risk Management':
+    'Sejauh mana peta jalan (roadmap) dan rencana transformasi Enterprise Risk Management (ERM) diimplementasikan secara terstruktur dan terukur?',
+  'Rencana transformasi Enterprise Risk Management (ERM)':
+    'Sejauh mana peta jalan (roadmap) dan rencana transformasi Enterprise Risk Management (ERM) diimplementasikan secara terstruktur dan terukur?',
+  'Peran Manajemen Risiko dalam penyusunan rencana strategis':
+    'Apakah analisis dan kajian profil risiko telah diintegrasikan secara formal dalam proses penyusunan Rencana Jangka Panjang Perusahaan (RJPP)?',
+  'Hubungan peran Manajemen Risiko terhadap pencapaian target strategis RKAP':
+    'Bagaimana keterlibatan fungsi manajemen risiko dalam memastikan target strategis Rencana Kerja dan Anggaran Perusahaan (RKAP) dapat dicapai dengan mitigasi yang memadai?',
+  'Kapasitas risiko':
+    'Apakah perusahaan telah menetapkan batas maksimum kapasitas risiko (Risk Capacity) yang mampu ditanggung berdasarkan ketahanan modal dan likuiditas?',
+  'Selera Risiko':
+    'Sejauh mana Pernyataan Selera Risiko (Risk Appetite Statement) dan Batas Toleransi Risiko dipedomani secara konsisten dalam keputusan bisnis sehari-hari?',
+  'Komunikasi selera Risiko kepada pemangku kepentingan eksternal':
+    'Apakah kebijakan dan selera risiko perusahaan telah dikomunikasikan secara transparan kepada pemangku kepentingan eksternal terkait (regulator, investor, kreditur)?',
+  'Kebijakan Risiko':
+    'Apakah kebijakan manajemen risiko perusahaan telah disahkan secara formal, memadai, dan mencakup seluruh jenis risiko yang dihadapi perusahaan?',
+  'Prosedur risiko':
+    'Seberapa jelas, praktis, dan mutakhir standar operasional prosedur (SOP) manajemen risiko dalam memandu pelaksanaan teknis mitigasi di setiap unit kerja?',
+  'Kebijakan dan/atau prosedur untuk mitigasi peristiwa penting terkait kerahasiaan data':
+    'Apakah kebijakan dan prosedur mitigasi risiko kerahasiaan, privasi data, dan keamanan informasi telah diimplementasikan secara ketat?',
+  'Rencana darurat (contingency plan)':
+    'Apakah perusahaan telah menyusun dan memutakhirkan rencana darurat (Contingency Plan) untuk mengantisipasi skenario krisis operasional dan finansial?',
+  'Reviu dan Stress test terhadap prosedur dan SOP':
+    'Seberapa rutin reviu berkala dan pengujian ketahanan (Stress Testing) dilakukan terhadap keandalan prosedur dan SOP operasional perusahaan?',
+  'Organ fungsi kepatuhan dan perannya':
+    'Bagaimana efektivitas fungsi kepatuhan dalam memastikan kepatuhan terhadap seluruh peraturan perundang-undangan dan meminimalkan risiko sanksi hukum?',
+  'Penerapan Kerangka Integrated Enterprise Risk Management (ERM)':
+    'Apakah kerangka kerja Integrated Enterprise Risk Management (ERM) telah diterapkan secara menyeluruh dan terhubung di setiap proses bisnis perusahaan?',
+  'Efektivitas Pengendalian Intern':
+    'Bagaimana keandalan dan efektivitas sistem pengendalian intern (Internal Control) dalam mencegah terjadinya penyimpangan, kecurangan, dan inefisiensi proses?',
+  'Efektivitas praktik Manajemen Risiko':
+    'Bagaimana efektivitas dan kualitas implementasi praktik manajemen risiko secara menyeluruh dalam mendukung stabilitas bisnis perusahaan?',
 
   // DIMENSI 4: Proses dan Kontrol Risiko
-  {
-    id: 'D4_Q1',
-    dimNum: 4,
-    dimName: 'Proses dan Kontrol Risiko',
-    subtopic: 'Identifikasi & Register Risiko Rutin',
-    question: 'Proses identifikasi, analisis, dan pembaruan Register Risiko (Risk Register) dilakukan secara rutin dan mendalam, bukan sekadar pemenuhan dokumen administratif.'
-  },
-  {
-    id: 'D4_Q2',
-    dimNum: 4,
-    dimName: 'Proses dan Kontrol Risiko',
-    subtopic: 'Disiplin Rencana Mitigasi (Action Plan)',
-    question: 'Rencana aksi mitigasi risiko dilaksanakan secara disiplin dengan penanggung jawab dan batas waktu penyelesaian yang dipantau progresnya secara berkala.'
-  },
-  {
-    id: 'D4_Q3',
-    dimNum: 4,
-    dimName: 'Proses dan Kontrol Risiko',
-    subtopic: 'Pencatatan Insiden & Kerugian Risiko',
-    question: 'Setiap insiden operasional, kerugian finansial, atau kegagalan kontrol segera dicatat dalam database insiden (Risk Event / Loss Event Database) dan diinvestigasi akar masalahnya.'
-  },
-  {
-    id: 'D4_Q4',
-    dimNum: 4,
-    dimName: 'Proses dan Kontrol Risiko',
-    subtopic: 'Ketahanan Bisnis (BCP) & Simulasi Krisis',
-    question: 'Rencana Kelangsungan Usaha (Business Continuity Plan / BCP) dan kesiapsiagaan darurat telah disimulasikan secara berkala dan siap diaktifkan saat terjadi krisis.'
-  },
+  'Identifikasi Risiko utama':
+    'Apakah proses identifikasi risiko-risiko utama (Top Risks) dilakukan secara komprehensif, berkala, dan melibatkan seluruh unit kerja terkait?',
+  'Pengukuran Risiko':
+    'Seberapa andal metodologi pengukuran risiko (kualitatif maupun kuantitatif) dalam menilai tingkat kemungkinan terjadinya dan keparahan dampak risiko?',
+  'Kerangka proses pengukuran Risiko untuk prioritisasi Risiko':
+    'Apakah kerangka pengukuran risiko telah berjalan efektif untuk memprioritaskan alokasi sumber daya mitigasi pada risiko-risiko berkategori tinggi?',
+  'Integrasi atas seluruh Risiko utama':
+    'Bagaimana proses integrasi dan agregasi profil seluruh risiko utama di tingkat korporasi untuk memberikan gambaran eksposur menyeluruh bagi Direksi?',
+  'Aktivitas perlakuan terhadap Risiko utama':
+    'Apakah rencana aksi mitigasi risiko (Risk Treatment Action Plan) telah dilaksanakan secara disiplin dengan penanggung jawab dan batas waktu yang jelas?',
+  'Identifikasi dan pengelolaan eksposur Risiko yang berada diatas selera risiko':
+    'Bagaimana efektivitas penanganan dan tindakan korektif terhadap eksposur risiko yang teridentifikasi melampaui batas toleransi atau selera risiko perusahaan?',
 
   // DIMENSI 5: Model, Data, dan Teknologi Risiko
-  {
-    id: 'D5_Q1',
-    dimNum: 5,
-    dimName: 'Model, Data, dan Teknologi Risiko',
-    subtopic: 'Sistem Informasi & Aplikasi Risiko',
-    question: 'Tersedia aplikasi/sistem informasi manajemen risiko yang terintegrasi, andal, dan mempermudah pelaporan profil risiko secara terpusat.'
-  },
-  {
-    id: 'D5_Q2',
-    dimNum: 5,
-    dimName: 'Model, Data, dan Teknologi Risiko',
-    subtopic: 'Kualitas & Integritas Data Risiko',
-    question: 'Data profil risiko dan Key Risk Indicators (KRI) yang disajikan akurat, mutakhir, serta dapat diandalkan oleh manajemen untuk pengambilan keputusan.'
-  },
-  {
-    id: 'D5_Q3',
-    dimNum: 5,
-    dimName: 'Model, Data, dan Teknologi Risiko',
-    subtopic: 'Indikator Peringatan Dini (Early Warning)',
-    question: 'Perusahaan memiliki sistem indikator peringatan dini (Early Warning System / EWS) yang mampu mendeteksi potensi pemburukan risiko sebelum berdampak fatal.'
-  },
-  {
-    id: 'D5_Q4',
-    dimNum: 5,
-    dimName: 'Model, Data, dan Teknologi Risiko',
-    subtopic: 'Keamanan Data & Tata Kelola IT',
-    question: 'Keamanan data risiko, hak akses sistem, dan privasi informasi terlindungi dengan baik dari potensi ancaman siber (cybersecurity) dan kebocoran data.'
+  'Pelaporan Risiko melaporkan Risiko secara real-time':
+    'Apakah sistem pelaporan risiko mampu menyajikan laporan profil risiko secara tepat waktu (real-time), akurat, dan mudah dipahami oleh manajemen puncak?',
+  'Permodelan dan Teknologi Risiko':
+    'Sejauh mana pemanfaatan teknologi informasi, aplikasi manajemen risiko, atau pemodelan analitik dalam mendukung otomatisasi pemantauan risiko?',
+  'Model / alat pemantauan untuk menunjang proses Manajemen Risiko dan pengambilan keputusan':
+    'Sejauh mana keandalan model dan instrumen pemantauan risiko dalam menunjang pengambilan keputusan bisnis serta pemenuhan regulasi industri?',
+  'Sistem informasi Manajemen Risiko':
+    'Bagaimana keandalan, integrasi, dan kemudahan akses Sistem Informasi Manajemen Risiko (SIMR) dalam mendukung pelaporan profil risiko korporat?',
+  'Data Risiko':
+    'Bagaimana keakuratan, kelengkapan, dan ketersediaan basis data risiko historis (termasuk Key Risk Indicators dan Loss Event Database) di perusahaan?',
+  'Cakupan dan kualitas data Risiko':
+    'Apakah cakupan, integritas, dan validasi kualitas data risiko telah memenuhi standar ketat pengawasan regulator industri finansial?'
+};
+
+// Fungsi pembuat kalimat pertanyaan yang selalu menghasilkan pertanyaan bahasa Indonesia yang valid
+export function createQuestionSentenceForParameter(paramId: number, title: string): string {
+  // Cek kecocokan langsung
+  const cleanTitle = title.split('(')[0].trim();
+  if (PARAMETER_QUESTION_MAP[title]) {
+    return PARAMETER_QUESTION_MAP[title];
   }
-];
+  if (PARAMETER_QUESTION_MAP[cleanTitle]) {
+    return PARAMETER_QUESTION_MAP[cleanTitle];
+  }
+
+  // Cek kecocokan sebagian
+  for (const [key, qText] of Object.entries(PARAMETER_QUESTION_MAP)) {
+    if (cleanTitle.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(cleanTitle.toLowerCase())) {
+      return qText;
+    }
+  }
+
+  // Fallback kalimat tanya terstruktur
+  return `Bagaimana efektivitas penerapan, kecukupan kebijakan, dan pengawasan terkait ${cleanTitle.toLowerCase()} di lingkungan perusahaan?`;
+}
+
+// Menghasilkan daftar pertanyaan kuesioner yang 100% PERSIS sejumlah parameter (42 untuk Umum, 40 untuk Finansial)
+export function getSurveyQuestionsForModel(model: IndustryModel): SurveyQuestion[] {
+  const params = getParametersForModel(model) as RmiParameter[];
+
+  return params.map(p => {
+    const questionSentence = createQuestionSentenceForParameter(p.id, p.title);
+
+    return {
+      id: String(p.id),
+      paramId: p.id,
+      dimNum: p.dim_num,
+      dimName: p.dim_name,
+      subdim: p.subdim,
+      paramTitle: p.title,
+      question: questionSentence
+    };
+  });
+}
 
 export const RESPONDENT_GROUPS = [
   {
@@ -186,9 +201,9 @@ export const RESPONDENT_GROUPS = [
 ];
 
 export const LIKERT_OPTIONS = [
-  { value: 1, label: 'Sangat Kurang / Tidak Sesuai', shortLabel: '1 - Sangat Kurang', color: 'rose' },
-  { value: 2, label: 'Kurang / Belum Memadai', shortLabel: '2 - Kurang', color: 'amber' },
-  { value: 3, label: 'Cukup / Sebagian Memenuhi', shortLabel: '3 - Cukup', color: 'blue' },
+  { value: 1, label: 'Sangat Kurang / Belum Ada', shortLabel: '1 - Sangat Kurang', color: 'rose' },
+  { value: 2, label: 'Kurang / Sebagian Kecil', shortLabel: '2 - Kurang', color: 'amber' },
+  { value: 3, label: 'Cukup / Standar', shortLabel: '3 - Cukup', color: 'blue' },
   { value: 4, label: 'Baik / Sesuai Praktik', shortLabel: '4 - Baik', color: 'indigo' },
   { value: 5, label: 'Sangat Baik / Praktik Terbaik', shortLabel: '5 - Sangat Baik', color: 'emerald' }
 ];

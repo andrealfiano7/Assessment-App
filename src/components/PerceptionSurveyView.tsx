@@ -3,15 +3,18 @@ import {
   CompleteAssessmentData,
   SurveySubmission,
   RespondentGroup,
-  PerceptionSurveyData
+  PerceptionSurveyData,
+  RmiParameter
 } from '../types/rmi';
 import { CalculationResult } from '../utils/calculator';
 import {
-  SURVEY_QUESTIONS,
+  getSurveyQuestionsForModel,
   RESPONDENT_GROUPS,
   LIKERT_OPTIONS
 } from '../data/perceptionSurveyQuestions';
 import { SAMPLE_SURVEY_SUBMISSIONS } from '../data/samplePerceptionData';
+import { DIMENSIONS_META } from '../data/rmiCommon';
+import { getParametersForModel } from '../utils/storage';
 import {
   MessageSquareQuote,
   CheckCircle2,
@@ -30,7 +33,9 @@ import {
   UserCheck,
   Building2,
   FileSpreadsheet,
-  Info
+  Info,
+  Search,
+  Filter
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -47,6 +52,15 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
 }) => {
   const [activeSubTab, setActiveSubTab] = useState<'form' | 'recap'>('recap');
 
+  // Dynamic Questions: EXACTLY matches the number of parameters (42 for Umum, 40 for Perbankan/Asuransi)
+  const surveyQuestions = useMemo(() => {
+    return getSurveyQuestionsForModel(assessmentData.profile.model);
+  }, [assessmentData.profile.model]);
+
+  const allParameters = useMemo(() => {
+    return getParametersForModel(assessmentData.profile.model) as RmiParameter[];
+  }, [assessmentData.profile.model]);
+
   // Form State
   const [selectedGroup, setSelectedGroup] = useState<RespondentGroup>('lini1');
   const [respondentName, setRespondentName] = useState<string>('');
@@ -55,6 +69,8 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
   const [surveyNotes, setSurveyNotes] = useState<string>('');
   const [isSubmittedSuccess, setIsSubmittedSuccess] = useState<boolean>(false);
   const [filterGroup, setFilterGroup] = useState<string>('all');
+  const [activeDimFilter, setActiveDimFilter] = useState<number>(0); // 0 = all
+  const [searchParamQuery, setSearchParamQuery] = useState<string>('');
 
   // Submissions list
   const submissions = useMemo(() => {
@@ -70,13 +86,13 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
   };
 
   const answeredCount = Object.keys(answers).length;
-  const progressPercent = Math.round((answeredCount / SURVEY_QUESTIONS.length) * 100);
+  const progressPercent = Math.round((answeredCount / surveyQuestions.length) * 100);
 
   // Submit form
   const handleSubmitSurvey = (e: React.FormEvent) => {
     e.preventDefault();
-    if (answeredCount < SURVEY_QUESTIONS.length) {
-      alert(`Mohon jawab seluruh ${SURVEY_QUESTIONS.length} pertanyaan kuesioner sebelum mengirimkan.`);
+    if (answeredCount < surveyQuestions.length) {
+      alert(`Mohon jawab seluruh ${surveyQuestions.length} pertanyaan kuesioner sebelum mengirimkan (Baru terisi ${answeredCount} butir).`);
       return;
     }
 
@@ -94,7 +110,6 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
     onUpdatePerceptionSurvey({ submissions: updatedSubmissions });
 
     setIsSubmittedSuccess(true);
-    // Reset form after short delay
     setTimeout(() => {
       setAnswers({});
       setRespondentName('');
@@ -133,7 +148,7 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `Rekapitulasi_Survei_Persepsi_${assessmentData.profile.companyName}_${assessmentData.profile.year}.csv`);
+    link.setAttribute('download', `Rekapitulasi_Kuesioner_Persepsi_${assessmentData.profile.companyName}_${assessmentData.profile.year}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -146,16 +161,18 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
         total: 0,
         overallAvg: 0,
         dimAverages: [0, 0, 0, 0, 0],
+        paramAverages: {} as Record<number, number>,
         groupAverages: {} as Record<RespondentGroup, number>,
         groupCounts: {} as Record<RespondentGroup, number>
       };
     }
 
-    // Per Dimension averages
     const dimTotals = [0, 0, 0, 0, 0];
     const dimCounts = [0, 0, 0, 0, 0];
 
-    // Group breakdown
+    const paramTotals: Record<number, number> = {};
+    const paramCounts: Record<number, number> = {};
+
     const groupScoreTotals: Record<string, number> = {};
     const groupAnswerCounts: Record<string, number> = {};
     const groupRespondents: Record<string, number> = {
@@ -169,12 +186,16 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
     submissions.forEach(sub => {
       groupRespondents[sub.respondentGroup] = (groupRespondents[sub.respondentGroup] || 0) + 1;
 
-      Object.entries(sub.answers).forEach(([qId, val]) => {
-        const question = SURVEY_QUESTIONS.find(q => q.id === qId);
+      Object.entries(sub.answers).forEach(([qIdStr, val]) => {
+        const paramId = parseInt(qIdStr, 10);
+        const question = surveyQuestions.find(q => q.paramId === paramId || q.id === qIdStr);
         if (question) {
           const dIdx = question.dimNum - 1;
           dimTotals[dIdx] += val;
           dimCounts[dIdx] += 1;
+
+          paramTotals[question.paramId] = (paramTotals[question.paramId] || 0) + val;
+          paramCounts[question.paramId] = (paramCounts[question.paramId] || 0) + 1;
 
           groupScoreTotals[sub.respondentGroup] = (groupScoreTotals[sub.respondentGroup] || 0) + val;
           groupAnswerCounts[sub.respondentGroup] = (groupAnswerCounts[sub.respondentGroup] || 0) + 1;
@@ -184,6 +205,13 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
 
     const dimAverages = dimTotals.map((tot, idx) => {
       return dimCounts[idx] > 0 ? parseFloat((tot / dimCounts[idx]).toFixed(2)) : 0;
+    });
+
+    const paramAverages: Record<number, number> = {};
+    Object.keys(paramTotals).forEach(pIdStr => {
+      const pId = parseInt(pIdStr, 10);
+      const count = paramCounts[pId] || 0;
+      paramAverages[pId] = count > 0 ? parseFloat((paramTotals[pId] / count).toFixed(2)) : 0;
     });
 
     const totalAllScores = dimTotals.reduce((a, b) => a + b, 0);
@@ -200,23 +228,16 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
       total: submissions.length,
       overallAvg,
       dimAverages,
+      paramAverages,
       groupAverages: groupAverages as Record<RespondentGroup, number>,
       groupCounts: groupRespondents as Record<RespondentGroup, number>
     };
-  }, [submissions]);
+  }, [submissions, surveyQuestions]);
 
   // Dimension details for comparison with document assessment
   const dimensionComparisons = useMemo(() => {
-    const names = [
-      'Budaya dan Kapabilitas Risiko',
-      'Organisasi dan Tata Kelola Risiko',
-      'Kerangka Risiko dan Kepatuhan',
-      'Proses dan Kontrol Risiko',
-      'Model, Data, dan Teknologi Risiko'
-    ];
-
-    return names.map((name, idx) => {
-      const dimNum = idx + 1;
+    return DIMENSIONS_META.map((meta, idx) => {
+      const dimNum = meta.dimNum;
       const perceptionScore = stats.dimAverages[idx] || 0;
       const assessorScore = calculation.dimensions[idx]?.score || 0;
       const gap = parseFloat((perceptionScore - assessorScore).toFixed(2));
@@ -233,7 +254,7 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
 
       return {
         dimNum,
-        name,
+        name: meta.name,
         perceptionScore,
         assessorScore,
         gap,
@@ -242,6 +263,54 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
       };
     });
   }, [stats, calculation]);
+
+  // Parameter-level comparisons (42 items)
+  const parameterComparisons = useMemo(() => {
+    return surveyQuestions.map(q => {
+      const perceptionScore = stats.paramAverages[q.paramId] || 0;
+      const assessorAssessment = assessmentData.assessments[q.paramId];
+      const assessorScore = assessorAssessment?.score || 0;
+      const gap = parseFloat((perceptionScore - assessorScore).toFixed(2));
+
+      let status = 'Selaras';
+      let badgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-300';
+
+      if (assessorScore === 0) {
+        status = 'Belum Dinilai Asesor';
+        badgeColor = 'bg-slate-100 text-slate-600 border-slate-300';
+      } else if (gap > 0.6) {
+        status = 'Kesenjangan Tinggi (Optimis)';
+        badgeColor = 'bg-amber-100 text-amber-800 border-amber-300';
+      } else if (gap < -0.6) {
+        status = 'Kesenjangan Kritis (Kritis)';
+        badgeColor = 'bg-blue-100 text-blue-800 border-blue-300';
+      }
+
+      return {
+        ...q,
+        perceptionScore,
+        assessorScore,
+        gap,
+        status,
+        badgeColor
+      };
+    });
+  }, [surveyQuestions, stats, assessmentData.assessments]);
+
+  // Filtered Parameter comparisons for table
+  const filteredParameterComparisons = useMemo(() => {
+    return parameterComparisons.filter(item => {
+      if (activeDimFilter > 0 && item.dimNum !== activeDimFilter) return false;
+      if (searchParamQuery.trim()) {
+        const q = searchParamQuery.toLowerCase();
+        const matchesTitle = item.paramTitle.toLowerCase().includes(q);
+        const matchesQuestion = item.question.toLowerCase().includes(q);
+        const matchesId = `p.${item.paramId}`.includes(q) || `${item.paramId}` === q;
+        if (!matchesTitle && !matchesQuestion && !matchesId) return false;
+      }
+      return true;
+    });
+  }, [parameterComparisons, activeDimFilter, searchParamQuery]);
 
   // Filtered submissions list for table
   const filteredSubmissions = useMemo(() => {
@@ -263,11 +332,11 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
                 Survei Persepsi Maturitas Risiko (RMI)
               </h2>
               <span className="px-2.5 py-0.5 rounded-full bg-periwinkle-100 text-periwinkle-700 font-bold text-xs border border-periwinkle-300">
-                Juknis KBUMN SK-8
+                {surveyQuestions.length} Pertanyaan Parameter
               </span>
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
-              Instrumen pengujian silang (cross-check) persepsi 5 Dimensi antara Dewan Komisaris, Direksi, dan Lini 1, 2, 3.
+              Kuesioner persepsi terstruktur 1-to-1 sesuai jumlah {surveyQuestions.length} parameter Juknis KBUMN SK-8/DKU.MBU/12/2023.
             </p>
           </div>
         </div>
@@ -288,7 +357,7 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
               <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
                 activeSubTab === 'recap' ? 'bg-white/25 text-white' : 'bg-slate-200 text-slate-700'
               }`}>
-                {submissions.length}
+                {submissions.length} Responden
               </span>
             </button>
 
@@ -301,7 +370,7 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
               }`}
             >
               <Plus className="w-4 h-4" />
-              <span>Formulir Kuesioner Baru</span>
+              <span>Formulir Kuesioner ({surveyQuestions.length} Butir)</span>
             </button>
           </div>
 
@@ -397,17 +466,17 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
           </div>
 
           {/* Sticky Progress Bar */}
-          <div className="glass-card p-3 sticky top-3 z-20 flex items-center justify-between gap-4 bg-white/90 backdrop-blur-md shadow-glass">
+          <div className="glass-card p-3.5 sticky top-3 z-20 flex flex-wrap items-center justify-between gap-4 bg-white/95 backdrop-blur-md shadow-glass">
             <div className="flex items-center gap-3">
               <span className="text-xs font-bold text-slate-800">
                 Progres Pengisian:
               </span>
-              <span className="text-xs font-mono font-bold text-periwinkle-700 bg-periwinkle-100 px-2 py-0.5 rounded-md">
-                {answeredCount} / {SURVEY_QUESTIONS.length} Pertanyaan ({progressPercent}%)
+              <span className="text-xs font-mono font-bold text-periwinkle-700 bg-periwinkle-100 px-2.5 py-0.5 rounded-md border border-periwinkle-300">
+                {answeredCount} / {surveyQuestions.length} Parameter ({progressPercent}%)
               </span>
             </div>
 
-            <div className="flex-1 max-w-xs h-2 bg-slate-200 rounded-full overflow-hidden">
+            <div className="flex-1 min-w-[200px] max-w-md h-2.5 bg-slate-200 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-periwinkle-500 to-indigo-600 transition-all duration-300 rounded-full"
                 style={{ width: `${progressPercent}%` }}
@@ -416,11 +485,11 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
 
             <button
               type="submit"
-              disabled={answeredCount < SURVEY_QUESTIONS.length}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-periwinkle-500 text-white font-bold text-xs hover:bg-periwinkle-600 disabled:opacity-40 disabled:cursor-not-allowed transition shadow-periwinkle-glow cursor-pointer"
+              disabled={answeredCount < surveyQuestions.length}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-periwinkle-500 text-white font-bold text-xs hover:bg-periwinkle-600 disabled:opacity-40 disabled:cursor-not-allowed transition shadow-periwinkle-glow cursor-pointer"
             >
-              <Send className="w-3.5 h-3.5" />
-              <span>Kirim Jawaban Survei</span>
+              <Send className="w-4 h-4" />
+              <span>Kirim Kuesioner ({answeredCount}/{surveyQuestions.length})</span>
             </button>
           </div>
 
@@ -433,59 +502,87 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
             >
               <CheckCircle2 className="w-6 h-6 shrink-0" />
               <div>
-                <strong className="block text-sm font-bold">Terima Kasih! Jawaban Kuesioner Berhasil Disimpan.</strong>
-                <span className="text-xs text-emerald-100">Data survei persepsi Anda telah ditambahkan ke dalam database evaluasi.</span>
+                <strong className="block text-sm font-bold">Terima Kasih! Kuesioner Berhasil Disimpan.</strong>
+                <span className="text-xs text-emerald-100">Jawaban Anda telah ditambahkan ke dalam database survei persepsi.</span>
               </div>
             </motion.div>
           )}
 
           {/* Questions Grouped by Dimension */}
           {[1, 2, 3, 4, 5].map(dimNum => {
-            const dimQuestions = SURVEY_QUESTIONS.filter(q => q.dimNum === dimNum);
-            const dimName = dimQuestions[0]?.dimName || `Dimensi ${dimNum}`;
+            const dimQuestions = surveyQuestions.filter(q => q.dimNum === dimNum);
+            const dimMeta = DIMENSIONS_META.find(d => d.dimNum === dimNum);
 
             return (
               <div key={dimNum} className="glass-card p-4 sm:p-5 space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-slate-200/70">
-                  <span className="w-7 h-7 rounded-lg bg-periwinkle-500 text-white font-bold text-xs flex items-center justify-center font-mono">
-                    D{dimNum}
+                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/80">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-8 h-8 rounded-xl bg-periwinkle-500 text-white font-bold text-xs flex items-center justify-center font-mono shadow-xs">
+                      D{dimNum}
+                    </span>
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-900">
+                        Dimensi {dimNum}: {dimMeta?.name}
+                      </h3>
+                      <span className="text-[11px] text-slate-500">
+                        {dimQuestions.length} Parameter Pertanyaan
+                      </span>
+                    </div>
+                  </div>
+
+                  <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg">
+                    {dimQuestions.filter(q => answers[String(q.paramId)]).length} / {dimQuestions.length} Terjawab
                   </span>
-                  <h3 className="text-sm font-bold text-slate-900">
-                    {dimName}
-                  </h3>
                 </div>
 
                 <div className="space-y-4">
-                  {dimQuestions.map((q, qIndex) => {
-                    const selectedVal = answers[q.id];
+                  {dimQuestions.map(q => {
+                    const selectedVal = answers[String(q.paramId)];
 
                     return (
                       <div
-                        key={q.id}
-                        className={`p-3.5 sm:p-4 rounded-2xl border transition ${
+                        key={q.paramId}
+                        className={`p-4 rounded-2xl border-2 transition ${
                           selectedVal
-                            ? 'bg-periwinkle-50/50 border-periwinkle-200'
-                            : 'bg-white/60 border-slate-200/80 hover:bg-white/80'
+                            ? 'bg-periwinkle-50/60 border-periwinkle-300 shadow-2xs'
+                            : 'bg-white/70 border-slate-200/90 hover:bg-white/95'
                         }`}
                       >
-                        <div className="flex items-start justify-between gap-3 mb-2.5">
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-[11px] font-mono font-bold text-periwinkle-600 bg-white px-2 py-0.5 rounded-md border border-slate-200">
-                                Butir {q.id}
+                        <div className="flex items-start justify-between gap-3 mb-2">
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                              <span className="px-2 py-0.5 rounded-md bg-periwinkle-500 text-white font-mono font-bold text-xs shadow-xs">
+                                Parameter {q.paramId}
                               </span>
-                              <span className="text-xs font-semibold text-slate-600">
-                                {q.subtopic}
+                              <span className="text-xs font-semibold text-periwinkle-700 bg-periwinkle-50 px-2 py-0.5 rounded-md border border-periwinkle-200">
+                                {q.subdim}
+                              </span>
+                              <span className="text-xs font-bold text-slate-900 truncate">
+                                {q.paramTitle}
                               </span>
                             </div>
-                            <p className="text-xs sm:text-sm font-bold text-slate-800 leading-relaxed">
-                              {q.question}
+
+                            {/* Kalimat Pertanyaan Spesifik Parameter */}
+                            <p className="text-sm sm:text-[14.5px] font-bold text-slate-800 leading-relaxed pl-2 border-l-3 border-periwinkle-400">
+                              "{q.question}"
                             </p>
+                          </div>
+
+                          <div className="shrink-0">
+                            {selectedVal ? (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs border border-emerald-300">
+                                <Check className="w-3.5 h-3.5 stroke-[3]" /> Skor: {selectedVal}
+                              </span>
+                            ) : (
+                              <span className="text-[11px] text-amber-600 font-semibold bg-amber-50 px-2 py-1 rounded-full border border-amber-200">
+                                Belum dipilih
+                              </span>
+                            )}
                           </div>
                         </div>
 
                         {/* Likert 5 Options (Big Tactile Buttons for Seniors) */}
-                        <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 mt-3 pt-2 border-t border-slate-100">
+                        <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 mt-3 pt-2.5 border-t border-slate-100">
                           {LIKERT_OPTIONS.map(opt => {
                             const isChosen = selectedVal === opt.value;
 
@@ -493,19 +590,19 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
                               <button
                                 key={opt.value}
                                 type="button"
-                                onClick={() => handleSelectScore(q.id, opt.value)}
-                                className={`p-2.5 rounded-xl border text-left flex items-center sm:flex-col sm:items-center sm:text-center justify-between sm:justify-center gap-2 transition cursor-pointer ${
+                                onClick={() => handleSelectScore(String(q.paramId), opt.value)}
+                                className={`p-2.5 rounded-xl border-2 text-left flex items-center sm:flex-col sm:items-center sm:text-center justify-between sm:justify-center gap-1.5 transition cursor-pointer ${
                                   isChosen
                                     ? 'bg-periwinkle-500 text-white border-periwinkle-400 shadow-periwinkle-glow font-bold scale-[1.02]'
-                                    : 'bg-white/90 border-slate-200 text-slate-700 hover:bg-periwinkle-50/60 hover:border-periwinkle-300'
+                                    : 'bg-white/95 border-slate-200 text-slate-700 hover:bg-periwinkle-50/70 hover:border-periwinkle-300'
                                 }`}
                               >
-                                <span className={`w-6 h-6 rounded-full flex items-center justify-center font-mono font-bold text-xs ${
-                                  isChosen ? 'bg-white text-periwinkle-600' : 'bg-slate-100 text-slate-600'
+                                <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-mono font-bold text-xs ${
+                                  isChosen ? 'bg-white text-periwinkle-600' : 'bg-slate-100 text-slate-700'
                                 }`}>
                                   {opt.value}
                                 </span>
-                                <span className="text-xs font-semibold">
+                                <span className="text-xs font-semibold leading-tight">
                                   {opt.label}
                                 </span>
                               </button>
@@ -523,16 +620,16 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
           {/* Form Footer / Submit */}
           <div className="glass-card p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
             <div className="text-xs text-slate-600">
-              Pastikan seluruh <strong>{SURVEY_QUESTIONS.length} butir pertanyaan</strong> telah terisi sebelum menekan tombol kirim.
+              Pastikan seluruh <strong>{surveyQuestions.length} butir pertanyaan</strong> telah terisi sebelum menekan tombol kirim.
             </div>
 
             <button
               type="submit"
-              disabled={answeredCount < SURVEY_QUESTIONS.length}
+              disabled={answeredCount < surveyQuestions.length}
               className="flex items-center gap-2 px-6 py-3 rounded-xl bg-periwinkle-500 text-white font-bold text-sm hover:bg-periwinkle-600 disabled:opacity-40 disabled:cursor-not-allowed transition shadow-periwinkle-glow cursor-pointer"
             >
               <Send className="w-4 h-4" />
-              <span>Kirim Jawaban Kuesioner Persepsi</span>
+              <span>Kirim Jawaban Kuesioner ({answeredCount}/{surveyQuestions.length})</span>
             </button>
           </div>
         </form>
@@ -587,7 +684,7 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
                 {calculation.finalRmiScore.toFixed(2)} <span className="text-xs font-sans text-slate-500 font-semibold">/ 5.00</span>
               </div>
               <div className="text-[11px] text-slate-500 mt-1">
-                Hasil evaluasi 42 parameter formal KBUMN
+                Hasil evaluasi {surveyQuestions.length} parameter formal KBUMN
               </div>
             </div>
 
@@ -625,10 +722,10 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
               <div>
                 <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <BarChart3 className="w-4 h-4 text-periwinkle-600" />
-                  Matriks Perbandingan: Persepsi Responden vs Asesmen Bukti Dokumen
+                  Matriks Perbandingan 5 Dimensi: Persepsi Responden vs Asesmen Bukti Dokumen
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Identifikasi potensi blindspot atau kesenjangan pemahaman antara kebijakan formal dan persepsi operasional di lapangan.
+                  Evaluasi makro keselarasan pemahaman antara bukti dokumen audit dan persepsi organ perusahaan.
                 </p>
               </div>
             </div>
@@ -683,6 +780,116 @@ export const PerceptionSurveyView: React.FC<PerceptionSurveyViewProps> = ({
                       <td className="p-3">
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold border ${comp.tagColor}`}>
                           {comp.interpretation}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Detailed Parameter-by-Parameter Gap Analysis (All 42 Parameters) */}
+          <div className="glass-card p-4 sm:p-5 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <FileSpreadsheet className="w-4 h-4 text-periwinkle-600" />
+                  Analisis Celah Persepsi Per Parameter (Lengkap {surveyQuestions.length} Parameter)
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Membandingkan skor persepsi rata-rata responden dengan skor dokumen asesor untuk setiap butir pertanyaan parameter.
+                </p>
+              </div>
+
+              {/* Filter Dimensi & Search */}
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5" />
+                  <input
+                    type="text"
+                    placeholder="Cari parameter..."
+                    value={searchParamQuery}
+                    onChange={e => setSearchParamQuery(e.target.value)}
+                    className="glass-input pl-8 pr-2.5 py-1 text-xs rounded-lg"
+                  />
+                </div>
+
+                <div className="flex items-center bg-white/80 p-0.5 rounded-lg border border-slate-200 text-xs">
+                  <button
+                    onClick={() => setActiveDimFilter(0)}
+                    className={`px-2 py-1 rounded font-bold transition ${
+                      activeDimFilter === 0 ? 'bg-periwinkle-500 text-white' : 'text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    Semua
+                  </button>
+                  {[1, 2, 3, 4, 5].map(d => (
+                    <button
+                      key={d}
+                      onClick={() => setActiveDimFilter(d)}
+                      className={`px-2 py-1 rounded font-bold transition ${
+                        activeDimFilter === d ? 'bg-periwinkle-500 text-white' : 'text-slate-600 hover:bg-slate-100'
+                      }`}
+                    >
+                      D{d}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Table of 42 Parameters */}
+            <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead className="sticky top-0 z-10">
+                  <tr className="border-b border-slate-200 bg-slate-100 text-slate-700 shadow-2xs">
+                    <th className="p-2.5 font-bold w-16">No.</th>
+                    <th className="p-2.5 font-bold">Parameter & Kalimat Pertanyaan</th>
+                    <th className="p-2.5 font-bold text-center w-28">Persepsi (Survei)</th>
+                    <th className="p-2.5 font-bold text-center w-28">Asesor (Dokumen)</th>
+                    <th className="p-2.5 font-bold text-center w-20">Selisih</th>
+                    <th className="p-2.5 font-bold w-40">Status Keselarasan</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {filteredParameterComparisons.map(p => (
+                    <tr key={p.paramId} className="hover:bg-white/80 transition">
+                      <td className="p-2.5 font-mono font-bold text-slate-700">
+                        <span className="px-1.5 py-0.5 rounded bg-slate-200 text-slate-800 text-[11px]">
+                          P.{p.paramId}
+                        </span>
+                      </td>
+                      <td className="p-2.5">
+                        <div className="font-bold text-slate-900 mb-0.5">
+                          {p.paramTitle}
+                        </div>
+                        <div className="text-[11px] text-slate-600 italic">
+                          "{p.question}"
+                        </div>
+                      </td>
+                      <td className="p-2.5 text-center">
+                        <span className="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                          {p.perceptionScore.toFixed(2)}
+                        </span>
+                      </td>
+                      <td className="p-2.5 text-center">
+                        <span className="font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
+                          {p.assessorScore > 0 ? p.assessorScore : 'Belum'}
+                        </span>
+                      </td>
+                      <td className="p-2.5 text-center font-mono font-bold">
+                        {p.assessorScore > 0 ? (
+                          <span className={p.gap > 0 ? 'text-amber-600' : 'text-blue-600'}>
+                            {p.gap > 0 ? `+${p.gap.toFixed(2)}` : p.gap.toFixed(2)}
+                          </span>
+                        ) : (
+                          <span className="text-slate-400">-</span>
+                        )}
+                      </td>
+                      <td className="p-2.5">
+                        <span className={`px-2 py-0.5 rounded-full text-[10.5px] font-semibold border ${p.badgeColor}`}>
+                          {p.status}
                         </span>
                       </td>
                     </tr>
