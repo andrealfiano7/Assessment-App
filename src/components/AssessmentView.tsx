@@ -26,6 +26,126 @@ interface AssessmentViewProps {
   onUpdateAssessment: (paramId: number, update: Partial<ParameterAssessment>) => void;
 }
 
+interface CriteriaItem {
+  type: 'bullet' | 'subbullet' | 'paragraph';
+  text: string;
+}
+
+const parseCriteriaText = (rawText: string): CriteriaItem[] => {
+  if (!rawText) return [];
+  // Pastikan bullet yang mungkin tidak sengaja tergabung dalam satu baris terpisah secara bersih
+  const normalized = rawText.replace(/([^\n])\s*•\s*/g, '$1\n• ');
+  const rawLines = normalized.split('\n');
+  const items: CriteriaItem[] = [];
+  let currentItem: CriteriaItem | null = null;
+
+  for (const line of rawLines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    if (trimmed.startsWith('•')) {
+      if (currentItem) items.push(currentItem);
+      currentItem = {
+        type: 'bullet',
+        text: trimmed.replace(/^•\s*/, '')
+      };
+    } else if (trimmed.startsWith('o ') || trimmed.startsWith('o\t') || trimmed === 'o') {
+      if (currentItem) items.push(currentItem);
+      currentItem = {
+        type: 'subbullet',
+        text: trimmed.replace(/^o\s*/, '')
+      };
+    } else {
+      if (currentItem) {
+        if (currentItem.text.endsWith('-')) {
+          currentItem.text += trimmed;
+        } else {
+          currentItem.text += ' ' + trimmed;
+        }
+      } else {
+        currentItem = {
+          type: 'paragraph',
+          text: trimmed
+        };
+      }
+    }
+  }
+
+  if (currentItem) items.push(currentItem);
+  return items;
+};
+
+interface CriteriaRendererProps {
+  rawText: string;
+  textClass: string;
+  isSelected?: boolean;
+  isGrid?: boolean;
+}
+
+const CriteriaRenderer: React.FC<CriteriaRendererProps> = ({
+  rawText,
+  textClass,
+  isSelected = false,
+  isGrid = false
+}) => {
+  const items = useMemo(() => parseCriteriaText(rawText), [rawText]);
+
+  if (items.length === 0) {
+    return <div className={`${textClass} text-slate-400 italic`}>(Mengacu pada ketentuan juknis)</div>;
+  }
+
+  if (items.length === 1 && items[0].type === 'paragraph') {
+    return <div className={`${textClass} leading-relaxed text-slate-800`}>{items[0].text}</div>;
+  }
+
+  return (
+    <div className={isGrid ? 'space-y-1.5' : 'space-y-2'}>
+      {items.map((item, idx) => {
+        if (item.type === 'subbullet') {
+          return (
+            <div
+              key={idx}
+              className={`flex items-start ${
+                isGrid ? 'gap-1.5 ml-2.5 pl-1.5' : 'gap-2.5 ml-4 sm:ml-5 pl-2.5'
+              } border-l-2 ${isSelected ? 'border-periwinkle-400' : 'border-slate-200/90'}`}
+            >
+              <span
+                className={`rounded-full border-2 shrink-0 ${
+                  isGrid ? 'w-1.5 h-1.5 mt-1' : 'w-2 h-2 mt-1.5'
+                } ${isSelected ? 'border-periwinkle-600 bg-white' : 'border-slate-400 bg-white'}`}
+              />
+              <span className={`${textClass} text-slate-700 leading-relaxed`}>
+                {item.text}
+              </span>
+            </div>
+          );
+        }
+
+        if (item.type === 'paragraph') {
+          return (
+            <div key={idx} className={`${textClass} font-semibold text-slate-800 leading-relaxed mb-0.5`}>
+              {item.text}
+            </div>
+          );
+        }
+
+        return (
+          <div key={idx} className={`flex items-start ${isGrid ? 'gap-1.5' : 'gap-2.5 sm:gap-3'}`}>
+            <span
+              className={`rounded-full shrink-0 ${
+                isGrid ? 'w-1.5 h-1.5 mt-1.5' : 'w-2 sm:w-2.5 h-2 sm:h-2.5 mt-1.5'
+              } ${isSelected ? 'bg-periwinkle-600 shadow-xs ring-2 ring-periwinkle-300' : 'bg-slate-400'}`}
+            />
+            <span className={`${textClass} text-slate-800 leading-relaxed`}>
+              {item.text}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 export const AssessmentView: React.FC<AssessmentViewProps> = ({
   assessmentData,
   onUpdateAssessment
@@ -584,8 +704,13 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                             </div>
                           </div>
 
-                          <div className={`${textScale.criteria} pl-2 sm:pl-3 border-l-2 border-slate-300/80`}>
-                            {text}
+                          <div className="pl-1 sm:pl-2">
+                            <CriteriaRenderer
+                              rawText={text}
+                              textClass={textScale.criteria}
+                              isSelected={isSelected}
+                              isGrid={false}
+                            />
                           </div>
                         </motion.div>
                       );
@@ -623,8 +748,13 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                                 </span>
                               )}
                             </div>
-                            <div className={`${textScale.criteria} whitespace-pre-line`}>
-                              {text}
+                            <div className="mt-1">
+                              <CriteriaRenderer
+                                rawText={text}
+                                textClass={textScale.criteria}
+                                isSelected={isSelected}
+                                isGrid={true}
+                              />
                             </div>
                           </div>
                         </motion.div>
