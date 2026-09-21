@@ -28,6 +28,7 @@ import { FollowUpMonitoring } from './components/FollowUpMonitoring';
 import { OfficialReportView } from './components/OfficialReportView';
 import { ProfileModal } from './components/ProfileModal';
 import { ShieldCheck } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function App() {
   const [assessmentData, setAssessmentData] = useState<CompleteAssessmentData>(() => loadCurrentAssessment());
@@ -132,7 +133,43 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-[#6531F7] selection:text-white">
+    <div className="min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-[#6531F7] selection:text-white relative overflow-x-hidden">
+      {/* Dynamic Animated Ambient Liquid Orbs in Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10 select-none">
+        {/* Orb 1: Top Right Sky-Indigo Luminous Float */}
+        <motion.div
+          animate={{
+            x: [0, 40, -30, 0],
+            y: [0, -45, 30, 0],
+            scale: [1, 1.15, 0.92, 1],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute -top-36 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-300/40 via-purple-300/30 to-sky-200/45 blur-3xl"
+        />
+
+        {/* Orb 2: Center Left Vibrant Violet-Pink Glow */}
+        <motion.div
+          animate={{
+            x: [0, -35, 30, 0],
+            y: [0, 40, -35, 0],
+            scale: [1, 1.2, 0.9, 1],
+          }}
+          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+          className="absolute top-1/4 -left-40 w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-fuchsia-300/30 via-[#6531F7]/15 to-purple-200/40 blur-3xl"
+        />
+
+        {/* Orb 3: Bottom Center Lavender & Cyan Aura */}
+        <motion.div
+          animate={{
+            x: [0, 30, -35, 0],
+            y: [0, -30, 40, 0],
+            scale: [0.92, 1.12, 0.98, 0.92],
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+          className="absolute -bottom-40 right-1/3 w-[700px] h-[700px] rounded-full bg-gradient-to-tl from-purple-400/25 via-violet-300/20 to-sky-300/35 blur-3xl"
+        />
+      </div>
+
       {/* Outer Container with Floating Sticky Sidebar + Main Content Layout */}
       <div className="flex-1 flex max-w-[1720px] w-full mx-auto p-3 sm:p-4 gap-3 sm:gap-4 relative">
         {/* Desktop Sticky Side Menu (From UI Kit) */}
@@ -153,10 +190,13 @@ export function App() {
         {/* Mobile Slide-over Drawer Backdrop */}
         {isMobileSidebarOpen && (
           <div
-            className="fixed inset-0 z-50 md:hidden bg-slate-900/40 backdrop-blur-sm p-4 flex"
+            className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm md:hidden transition-opacity"
             onClick={() => setIsMobileSidebarOpen(false)}
           >
-            <div onClick={e => e.stopPropagation()} className="h-full">
+            <div
+              className="absolute left-3 top-3 bottom-3 w-72 z-50"
+              onClick={e => e.stopPropagation()}
+            >
               <Sidebar
                 activeTab={activeTab}
                 onSelectTab={tab => {
@@ -195,71 +235,82 @@ export function App() {
             />
           </div>
 
-          {/* Active View Container */}
+          {/* Active View Container with Full Fluid Page Transition Animation */}
           <main className="flex-1 min-h-0">
-            {activeTab === 'dashboard' && (
-              <Dashboard
-                assessmentData={assessmentData}
-                calculation={calculation}
-                onNavigateTab={handleNavigateTab}
-              />
-            )}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 14, scale: 0.995 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.995 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full"
+              >
+                {activeTab === 'dashboard' && (
+                  <Dashboard
+                    assessmentData={assessmentData}
+                    calculation={calculation}
+                    onNavigateTab={handleNavigateTab}
+                  />
+                )}
 
-            {activeTab === 'assessment' && (
-              <AssessmentView
-                assessmentData={assessmentData}
-                onUpdateAssessment={handleUpdateAssessment}
-              />
-            )}
+                {activeTab === 'assessment' && (
+                  <AssessmentView
+                    assessmentData={assessmentData}
+                    onUpdateAssessment={handleUpdateAssessment}
+                  />
+                )}
 
-            {activeTab === 'lampiran4' && (
-              <LampiranIvView
-                assessmentData={assessmentData}
-                parameters={parameters}
-                calculation={calculation}
-                onUpdateAssessment={handleUpdateAssessment}
-                onUpdateRecommendations={handleUpdateRecommendations}
-                onUpdateDimensionSummary={handleUpdateDimensionSummary}
-                onNavigateToParam={() => setActiveTab('assessment')}
-              />
-            )}
+                {activeTab === 'lampiran4' && (
+                  <LampiranIvView
+                    assessmentData={assessmentData}
+                    parameters={parameters}
+                    calculation={calculation}
+                    onUpdateAssessment={handleUpdateAssessment}
+                    onUpdateRecommendations={handleUpdateRecommendations}
+                    onUpdateDimensionSummary={handleUpdateDimensionSummary}
+                    onNavigateToParam={() => setActiveTab('assessment')}
+                  />
+                )}
 
-            {activeTab === 'performance' && (
-              <PerformanceView
-                assessmentData={assessmentData}
-                calculation={calculation}
-                onUpdatePerformance={handleUpdatePerformance}
-              />
-            )}
+                {activeTab === 'performance' && (
+                  <PerformanceView
+                    assessmentData={assessmentData}
+                    calculation={calculation}
+                    onUpdatePerformance={handleUpdatePerformance}
+                  />
+                )}
 
-            {activeTab === 'checklist' && (
-              <DocumentChecklist
-                assessmentData={assessmentData}
-                onUpdateChecklist={handleUpdateChecklist}
-              />
-            )}
+                {activeTab === 'checklist' && (
+                  <DocumentChecklist
+                    assessmentData={assessmentData}
+                    onUpdateChecklist={handleUpdateChecklist}
+                  />
+                )}
 
-            {activeTab === 'gap' && (
-              <GapAnalysisView
-                assessmentData={assessmentData}
-                calculation={calculation}
-                onUpdateRecommendations={handleUpdateRecommendations}
-              />
-            )}
+                {activeTab === 'gap' && (
+                  <GapAnalysisView
+                    assessmentData={assessmentData}
+                    calculation={calculation}
+                    onUpdateRecommendations={handleUpdateRecommendations}
+                  />
+                )}
 
-            {activeTab === 'monitoring' && (
-              <FollowUpMonitoring
-                assessmentData={assessmentData}
-                onUpdateRecommendations={handleUpdateRecommendations}
-              />
-            )}
+                {activeTab === 'monitoring' && (
+                  <FollowUpMonitoring
+                    assessmentData={assessmentData}
+                    onUpdateRecommendations={handleUpdateRecommendations}
+                  />
+                )}
 
-            {activeTab === 'report' && (
-              <OfficialReportView
-                assessmentData={assessmentData}
-                calculation={calculation}
-              />
-            )}
+                {activeTab === 'report' && (
+                  <OfficialReportView
+                    assessmentData={assessmentData}
+                    calculation={calculation}
+                  />
+                )}
+              </motion.div>
+            </AnimatePresence>
           </main>
 
           {/* Footer */}

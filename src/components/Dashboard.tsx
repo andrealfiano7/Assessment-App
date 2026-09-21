@@ -17,6 +17,7 @@ import { CompleteAssessmentData } from '../types/rmi';
 import { CalculationResult } from '../utils/calculator';
 import { DIMENSIONS_META } from '../data/rmiCommon';
 import { RadarChart } from './RadarChart';
+import { motion } from 'framer-motion';
 
 interface DashboardProps {
   assessmentData: CompleteAssessmentData;
@@ -67,7 +68,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
             {/* Score & Phase Badge with Purple Accent */}
             <div className="flex flex-wrap items-baseline gap-3.5 pt-1">
               <div className="flex items-baseline space-x-1.5">
-                <span className="text-4xl sm:text-5xl font-black tracking-tight text-[#6531F7] font-mono drop-shadow-xs">
+                <span className="text-4xl sm:text-5xl font-black tracking-tight text-[#6531F7] drop-shadow-xs">
                   {calculation.finalRmiScore.toFixed(2)}
                 </span>
                 <span className="text-lg text-slate-400 font-medium">/ 5.00</span>
@@ -75,7 +76,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
               <div className="space-y-0.5">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#6531F7] text-white font-bold text-xs shadow-light-default">
-                  <Sparkles className="w-3.5 h-3.5 text-white" />
+                  <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
                   <span>{maturityPhase.subLevel}</span>
                 </div>
                 <div className="text-[11px] text-slate-500 pl-1 font-medium">
@@ -92,15 +93,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div className="space-y-1.5 pt-1">
               <div className="flex justify-between text-xs text-slate-600 font-medium">
                 <span>Kelengkapan Penilaian Parameter:</span>
-                <span className="font-bold font-mono text-[#6531F7]">
+                <span className="font-bold text-[#6531F7]">
                   {calculation.totalAssessed} / {calculation.totalParameters} ({calculation.completionPercentage}%)
                 </span>
               </div>
               <div className="w-full bg-slate-200/80 rounded-full h-2.5 overflow-hidden border border-white shadow-inner">
-                <div
-                  className="bg-gradient-to-r from-[#AB68FF] to-[#6531F7] h-2.5 rounded-full transition-all duration-500 shadow-xs"
-                  style={{ width: `${calculation.completionPercentage}%` }}
-                ></div>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${calculation.completionPercentage}%` }}
+                  transition={{ duration: 1, ease: 'easeOut' }}
+                  className="bg-gradient-to-r from-[#AB68FF] to-[#6531F7] h-2.5 rounded-full shadow-xs"
+                />
               </div>
             </div>
           </div>
@@ -108,7 +111,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
           {/* Right Breakdown Grid */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-2.5">
             {/* Skor Aspek Dimensi */}
-            <div className="glass-card p-3.5 space-y-1">
+            <motion.div
+              whileHover={{ y: -3, scale: 1.015 }}
+              className="glass-card p-3.5 space-y-1"
+            >
               <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
                 <span>Skor Dimensi</span>
                 <ShieldCheck className="w-4 h-4 text-[#6531F7]" />
@@ -119,10 +125,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="text-[10px] text-slate-500 font-medium">
                 Rata-rata 5 Dimensi
               </div>
-            </div>
+            </motion.div>
 
             {/* Penyesuaian Kinerja */}
-            <div className="glass-card p-3.5 space-y-1">
+            <motion.div
+              whileHover={{ y: -3, scale: 1.015 }}
+              className="glass-card p-3.5 space-y-1"
+            >
               <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
                 <span>Penyesuaian</span>
                 <Scale className="w-4 h-4 text-amber-500" />
@@ -133,10 +142,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="text-[10px] text-slate-500 font-medium">
                 {calculation.isAdjustmentApplicable ? 'Penyesuaian Aktif' : 'N/A (Skor < 3.00)'}
               </div>
-            </div>
+            </motion.div>
 
             {/* Tingkat Kesehatan */}
-            <div className="glass-card p-3.5 space-y-1">
+            <motion.div
+              whileHover={{ y: -3, scale: 1.015 }}
+              className="glass-card p-3.5 space-y-1"
+            >
               <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
                 <span>Kesehatan BUMN</span>
                 <HeartPulse className="w-4 h-4 text-rose-500" />
@@ -148,10 +160,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="text-[10px] text-slate-500 font-medium">
                 Bobot 50% = {calculation.healthWeighted}
               </div>
-            </div>
+            </motion.div>
 
             {/* Peringkat Komposit */}
-            <div className="glass-card p-3.5 space-y-1">
+            <motion.div
+              whileHover={{ y: -3, scale: 1.015 }}
+              className="glass-card p-3.5 space-y-1"
+            >
               <div className="flex items-center justify-between text-xs text-slate-500 font-semibold">
                 <span>Komposit Risiko</span>
                 <Activity className="w-4 h-4 text-indigo-500" />
@@ -163,12 +178,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
               <div className="text-[10px] text-slate-500 font-medium">
                 Bobot 50% = {calculation.compositeWeighted}
               </div>
-            </div>
+            </motion.div>
 
             {/* Total Kinerja Quick Banner */}
             <div className="col-span-2 bg-gradient-to-r from-purple-500/10 via-white/50 to-indigo-500/10 backdrop-blur-md border border-[#6531F7]/25 rounded-2xl p-3 text-xs flex items-center justify-between shadow-2xs">
               <span className="text-slate-800 text-xs font-semibold">
-                Total Skor Kinerja: <strong className="text-[#6531F7] font-mono font-bold text-sm ml-1">{calculation.totalPerformanceScore}</strong>
+                Total Skor Kinerja: <strong className="text-[#6531F7] font-bold text-sm ml-1">{calculation.totalPerformanceScore}</strong>
               </span>
               <button
                 onClick={() => onNavigateTab('kinerja')}
@@ -229,15 +244,17 @@ export const Dashboard: React.FC<DashboardProps> = ({
             const pct = dim.paramCount > 0 ? Math.round((dim.assessedCount / dim.paramCount) * 100) : 0;
 
             return (
-              <div
+              <motion.div
                 key={dim.dimNum}
+                whileHover={{ y: -2, scale: 1.008 }}
+                whileTap={{ scale: 0.995 }}
                 onClick={() => onNavigateTab('penilaian')}
-                className="glass-card p-3.5 hover:border-[#6531F7]/40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition cursor-pointer group"
+                className="glass-card p-3.5 hover:border-[#6531F7]/40 hover:shadow-[0_6px_20px_rgba(101,49,247,0.1)] transition cursor-pointer group"
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <div className="flex items-center space-x-3">
                     <span
-                      className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-white text-xs font-mono shadow-xs"
+                      className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-white text-xs shadow-xs"
                       style={{ backgroundColor: meta.color }}
                     >
                       D{dim.dimNum}
@@ -253,7 +270,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                   </div>
 
                   <div className="text-right">
-                    <span className="text-base font-black text-slate-900 font-mono">
+                    <span className="text-base font-black text-slate-900">
                       {dim.score > 0 ? dim.score.toFixed(2) : '-'}
                     </span>
                     <span className="text-[10px] text-slate-400 block">Skor Dimensi</span>
@@ -269,7 +286,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                     }}
                   ></div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

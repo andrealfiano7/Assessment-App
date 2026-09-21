@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { AssessmentProfile } from '../types/rmi';
 import { CalculationResult } from '../utils/calculator';
+import { motion } from 'framer-motion';
 
 export type NavTabId =
   | 'dashboard'
@@ -216,27 +217,42 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   const Icon = item.icon;
 
                   return (
-                    <button
+                    <motion.button
                       key={item.id}
+                      whileHover={{ x: isCollapsed ? 0 : 3 }}
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => onSelectTab(item.id)}
-                      className={`w-full flex items-center transition duration-150 rounded-xl text-left group ${
+                      className={`relative w-full flex items-center transition-colors rounded-xl text-left group z-10 ${
                         isCollapsed
                           ? 'justify-center p-2.5'
                           : 'px-2.5 py-2'
                       } ${
                         isActive
-                          ? 'bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-white/90 text-slate-900 font-bold'
-                          : 'hover:bg-white/60 border border-transparent text-slate-600 hover:text-slate-900'
+                          ? 'text-slate-900 font-bold'
+                          : 'hover:bg-white/40 text-slate-600 hover:text-slate-900'
                       }`}
                       title={isCollapsed ? `${item.label} (${item.sublabel})` : undefined}
                     >
+                      {/* Animated Active Gliding Pill Background */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeSidebarPill"
+                          className="absolute inset-0 bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.06)] border border-white/90 -z-10"
+                          transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                        />
+                      )}
+
                       {/* Left purple indicator line (exact from UI kit) */}
                       {!isCollapsed && isActive && (
-                        <div className="w-1 h-5 bg-[#6531F7] rounded-full mr-2 shrink-0 shadow-[0_0_6px_rgba(101,49,247,0.5)]"></div>
+                        <motion.div
+                          layoutId="activeSidebarBar"
+                          className="w-1 h-5 bg-[#6531F7] rounded-full mr-2 shrink-0 shadow-[0_0_8px_rgba(101,49,247,0.6)]"
+                          transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                        />
                       )}
 
                       <Icon
-                        className={`w-4 h-4 shrink-0 transition ${
+                        className={`w-4 h-4 shrink-0 transition-colors ${
                           isActive
                             ? 'text-[#6531F7]'
                             : 'text-slate-400 group-hover:text-slate-700'
@@ -248,9 +264,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           <span className="text-xs truncate">{item.label}</span>
                           {item.badge && (
                             <span
-                              className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md shrink-0 ml-1.5 ${
+                              className={`text-[10px] px-1.5 py-0.5 rounded-md shrink-0 ml-1.5 font-bold ${
                                 isActive
-                                  ? 'bg-[#6531F7]/10 text-[#6531F7] font-extrabold'
+                                  ? 'bg-[#6531F7]/10 text-[#6531F7]'
                                   : 'bg-slate-100/80 text-slate-500'
                               }`}
                             >
@@ -259,7 +275,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                           )}
                         </div>
                       )}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -271,14 +287,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Bottom Part: Live RMI Hub Pill (UI Kit "AI Insight Hub" Style) */}
       <div className="pt-3 border-t border-white/80 mt-2 shrink-0">
         {!isCollapsed ? (
-          <div
+          <motion.div
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => onSelectTab('dashboard')}
-            className="p-3 rounded-2xl bg-gradient-to-r from-[#6531F7] to-[#804DF8] text-white shadow-[0_0_16px_rgba(101,49,247,0.40)] cursor-pointer hover:shadow-[0_0_22px_rgba(101,49,247,0.55)] transition-all group"
+            className="p-3 rounded-2xl bg-gradient-to-r from-[#6531F7] to-[#804DF8] text-white shadow-[0_0_16px_rgba(101,49,247,0.40)] cursor-pointer hover:shadow-[0_0_24px_rgba(101,49,247,0.6)] transition group relative overflow-hidden"
           >
-            <div className="flex items-center justify-between">
+            {/* Ambient Shimmer Sheen */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+
+            <div className="flex items-center justify-between relative z-10">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white">
-                  <Sparkles className="w-3.5 h-3.5" />
+                  <Sparkles className="w-3.5 h-3.5 animate-pulse" />
                 </div>
                 <div>
                   <div className="text-[11px] font-bold tracking-tight text-white leading-none">
@@ -291,20 +312,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </div>
 
               <div className="text-right">
-                <span className="text-base font-black font-mono tracking-tight text-white">
+                <span className="text-base font-black tracking-tight text-white">
                   {calculation.finalRmiScore.toFixed(2)}
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         ) : (
-          <button
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => onSelectTab('dashboard')}
-            className="w-11 h-11 mx-auto rounded-2xl bg-gradient-to-r from-[#6531F7] to-[#804DF8] text-white shadow-[0_0_14px_rgba(101,49,247,0.44)] flex items-center justify-center cursor-pointer hover:scale-105 transition"
+            className="w-11 h-11 mx-auto rounded-2xl bg-gradient-to-r from-[#6531F7] to-[#804DF8] text-white shadow-[0_0_14px_rgba(101,49,247,0.44)] flex items-center justify-center cursor-pointer"
             title={`Skor RMI: ${calculation.finalRmiScore.toFixed(2)} (${calculation.maturityPhase.subLevel})`}
           >
-            <Sparkles className="w-5 h-5" />
-          </button>
+            <Sparkles className="w-5 h-5 animate-pulse" />
+          </motion.button>
         )}
       </div>
     </aside>

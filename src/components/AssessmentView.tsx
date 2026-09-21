@@ -15,6 +15,7 @@ import {
   BookOpen,
   Sparkles
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface AssessmentViewProps {
   assessmentData: CompleteAssessmentData;
@@ -151,10 +152,12 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
             const isCompleted = assessedCount === paramsInDim.length && paramsInDim.length > 0;
 
             return (
-              <button
+              <motion.button
                 key={dim.dimNum}
+                whileHover={{ y: -1.5, scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveDimNum(dim.dimNum)}
-                className={`flex items-center justify-between px-3 py-2 rounded-xl text-left transition duration-200 border ${
+                className={`flex items-center justify-between px-3 py-2 rounded-xl text-left transition duration-200 border cursor-pointer ${
                   isActive
                     ? 'bg-periwinkle-500 text-white border-periwinkle-400 shadow-periwinkle-glow font-bold'
                     : 'bg-white/50 border-white/60 hover:bg-white/80 text-slate-700'
@@ -162,7 +165,7 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
               >
                 <div className="min-w-0 pr-2">
                   <div className="flex items-center gap-1.5">
-                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md font-mono ${
+                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
                       isActive ? 'bg-white/20 text-white backdrop-blur-sm' : 'bg-slate-100/80 text-slate-600'
                     }`}>
                       D{dim.dimNum}
@@ -180,12 +183,12 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                   {isCompleted ? (
                     <CheckCircle2 className={`w-4 h-4 ${isActive ? 'text-white' : 'text-emerald-500'}`} />
                   ) : (
-                    <span className={`text-[10px] font-bold font-mono ${isActive ? 'text-white' : 'text-slate-500'}`}>
+                    <span className={`text-[10px] font-bold ${isActive ? 'text-white' : 'text-slate-500'}`}>
                       {paramsInDim.length > 0 ? Math.round((assessedCount / paramsInDim.length) * 100) : 0}%
                     </span>
                   )}
                 </div>
-              </button>
+              </motion.button>
             );
           })}
         </div>
@@ -380,8 +383,10 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                       const text = activeParam.criteria[cfg.lvl as 1|2|3|4|5] || '(Mengacu pada ketentuan juknis)';
 
                       return (
-                        <div
+                        <motion.div
                           key={cfg.lvl}
+                          whileHover={{ y: -2, scale: 1.015 }}
+                          whileTap={{ scale: 0.985 }}
                           onClick={() => handleSelectScore(cfg.lvl)}
                           className={`p-2.5 rounded-xl border text-xs cursor-pointer transition flex flex-col justify-between ${
                             isSelected
@@ -404,7 +409,7 @@ export const AssessmentView: React.FC<AssessmentViewProps> = ({
                               {text}
                             </div>
                           </div>
-                        </div>
+                        </motion.div>
                       );
                     })}
                   </div>

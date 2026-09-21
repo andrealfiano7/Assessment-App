@@ -186,3 +186,99 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Full Animate Keyframes */
+@keyframes floatOrb1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -45px) scale(1.12);
+  }
+  66% {
+    transform: translate(-25px, 20px) scale(0.94);
+  }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  40% {
+    transform: translate(-40px, 35px) scale(1.18);
+  }
+  75% {
+    transform: translate(30px, -30px) scale(0.92);
+  }
+}
+
+@keyframes floatOrb3 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  50% {
+    transform: translate(25px, -30px) scale(1.1);
+  }
+}
+
+@keyframes shimmerEffect {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(25deg);
+  }
+}
+
+@keyframes pulseGlowRing {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(101, 49, 247, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(101, 49, 247, 0);
+  }
+}
+
+.animate-orb-1 {
+  animation: floatOrb1 20s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+  animation: floatOrb2 25s ease-in-out infinite;
+}
+
+.animate-orb-3 {
+  animation: floatOrb3 22s ease-in-out infinite;
+}
+
+.animate-glow-ring {
+  animation: pulseGlowRing 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Liquid specular shimmer hover sweep on cards */
+.shimmer-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-container::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.75s ease-in-out;
+  pointer-events: none;
+}
+
+.shimmer-container:hover::after {
+  transform: translateX(100%);
+}

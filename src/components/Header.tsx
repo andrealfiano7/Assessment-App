@@ -18,6 +18,7 @@ import { exportAssessmentToCsv } from '../utils/exportHelper';
 import { exportAssessmentToJson, importAssessmentFromJson } from '../utils/storage';
 import { isSupabaseConfigured } from '../utils/supabaseClient';
 import { getPtAbcSampleData } from '../data/sampleDataPtAbc';
+import { motion } from 'framer-motion';
 
 interface HeaderProps {
   assessmentData: CompleteAssessmentData;
@@ -148,40 +149,52 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         )}
 
-        {/* Live Score Chip */}
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-purple-50 to-indigo-50/70 border border-[#6531F7]/25 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-[#6531F7]" />
+        {/* Live Score Chip with Spring Pulse */}
+        <motion.div
+          key={calculation.finalRmiScore}
+          initial={{ scale: 0.9 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 450, damping: 25 }}
+          className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-purple-50 to-indigo-50/70 border border-[#6531F7]/25 shadow-xs"
+        >
+          <Sparkles className="w-3.5 h-3.5 text-[#6531F7] animate-pulse" />
           <span className="text-[11px] font-bold text-slate-600">RMI:</span>
           <span className="font-black text-xs text-[#6531F7]">
             {calculation.finalRmiScore.toFixed(2)}
           </span>
-        </div>
+        </motion.div>
 
         {/* Action Icon Tools */}
         <div className="flex items-center space-x-0.5 border-l border-white/80 pl-2">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={handleExportCsv}
             className="p-1.5 text-slate-600 hover:text-emerald-700 hover:bg-white/80 rounded-xl transition cursor-pointer"
             title="Ekspor CSV / Excel"
           >
             <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={handleExportJson}
             className="p-1.5 text-slate-600 hover:text-blue-700 hover:bg-white/80 rounded-xl transition cursor-pointer"
             title="Cadangkan Data (JSON)"
           >
             <Download className="w-4 h-4 text-blue-600" />
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={() => fileInputRef.current?.click()}
             className="p-1.5 text-slate-600 hover:text-amber-700 hover:bg-white/80 rounded-xl transition cursor-pointer"
             title="Pulihkan Cadangan (JSON)"
           >
             <Upload className="w-4 h-4 text-amber-600" />
-          </button>
+          </motion.button>
           <input
             ref={fileInputRef}
             type="file"
@@ -190,21 +203,25 @@ export const Header: React.FC<HeaderProps> = ({
             className="hidden"
           />
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={handleResetToSample}
             className="p-1.5 text-slate-600 hover:text-[#6531F7] hover:bg-white/80 rounded-xl transition cursor-pointer hidden md:block"
             title="Muat Sampel PT ABC"
           >
             <RotateCcw className="w-4 h-4" />
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1, y: -1 }}
+            whileTap={{ scale: 0.92 }}
             onClick={onPrintReport}
             className="p-1.5 text-slate-600 hover:text-[#6531F7] hover:bg-white/80 rounded-xl transition cursor-pointer"
             title="Cetak Laporan Resmi (PDF)"
           >
             <Printer className="w-4 h-4" />
-          </button>
+          </motion.button>
         </div>
       </div>
     </header>

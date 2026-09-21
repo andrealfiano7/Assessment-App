@@ -26,6 +26,7 @@ import {
   ChevronRight,
   Award
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   CompleteAssessmentData,
   RmiParameter,
@@ -289,15 +290,24 @@ export function LampiranIvView({
       {/* 2. Sub-Tab Switcher (Segmented Glass Pill Bar - Clean Floating Design) */}
       <div className="glass-card p-1.5 rounded-2xl border border-white/80 shadow-light-default bg-white/70 backdrop-blur-xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-1.5">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setActiveSubTab('iva')}
-            className={`flex items-center justify-center gap-3 py-3 px-4 rounded-xl transition cursor-pointer ${
+            className={`relative flex items-center justify-center gap-3 py-3 px-4 rounded-xl transition cursor-pointer z-10 ${
               activeSubTab === 'iva'
-                ? 'bg-white text-slate-950 shadow-light-default border border-white/95 font-bold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 font-medium'
+                ? 'text-slate-950 font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/40 font-medium'
             }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 tracking-tight ${
+            {activeSubTab === 'iva' && (
+              <motion.div
+                layoutId="lampiranActivePill"
+                className="absolute inset-0 bg-white rounded-xl shadow-light-default border border-white/95 -z-10"
+                transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+              />
+            )}
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 tracking-tight transition-colors ${
               activeSubTab === 'iva' ? 'bg-[#6531F7] text-white shadow-light-default' : 'bg-slate-100 text-slate-600 border border-slate-200/60'
             }`}>
               IV.A
@@ -308,17 +318,26 @@ export function LampiranIvView({
                 Kajian Dokumen & Wawancara (Kolom A-D)
               </span>
             </div>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setActiveSubTab('ivb')}
-            className={`flex items-center justify-center gap-3 py-3 px-4 rounded-xl transition cursor-pointer ${
+            className={`relative flex items-center justify-center gap-3 py-3 px-4 rounded-xl transition cursor-pointer z-10 ${
               activeSubTab === 'ivb'
-                ? 'bg-white text-slate-950 shadow-light-default border border-white/95 font-bold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 font-medium'
+                ? 'text-slate-950 font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/40 font-medium'
             }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 tracking-tight ${
+            {activeSubTab === 'ivb' && (
+              <motion.div
+                layoutId="lampiranActivePill"
+                className="absolute inset-0 bg-white rounded-xl shadow-light-default border border-white/95 -z-10"
+                transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+              />
+            )}
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 tracking-tight transition-colors ${
               activeSubTab === 'ivb' ? 'bg-[#6531F7] text-white shadow-light-default' : 'bg-slate-100 text-slate-600 border border-slate-200/60'
             }`}>
               IV.B
@@ -329,17 +348,26 @@ export function LampiranIvView({
                 Kekuatan (Strengths) & Celah (Gaps) 5 Dimensi
               </span>
             </div>
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setActiveSubTab('ivc')}
-            className={`flex items-center justify-center gap-3 py-3 px-4 rounded-xl transition cursor-pointer ${
+            className={`relative flex items-center justify-center gap-3 py-3 px-4 rounded-xl transition cursor-pointer z-10 ${
               activeSubTab === 'ivc'
-                ? 'bg-white text-slate-950 shadow-light-default border border-white/95 font-bold'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 font-medium'
+                ? 'text-slate-950 font-bold'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white/40 font-medium'
             }`}
           >
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 tracking-tight ${
+            {activeSubTab === 'ivc' && (
+              <motion.div
+                layoutId="lampiranActivePill"
+                className="absolute inset-0 bg-white rounded-xl shadow-light-default border border-white/95 -z-10"
+                transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+              />
+            )}
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold shrink-0 tracking-tight transition-colors ${
               activeSubTab === 'ivc' ? 'bg-[#6531F7] text-white shadow-light-default' : 'bg-slate-100 text-slate-600 border border-slate-200/60'
             }`}>
               IV.C
@@ -350,7 +378,7 @@ export function LampiranIvView({
                 Format Baku Juknis & Matriks Prioritas I-III
               </span>
             </div>
-          </button>
+          </motion.button>
         </div>
       </div>
 

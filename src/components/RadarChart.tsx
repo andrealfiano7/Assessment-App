@@ -1,5 +1,6 @@
 import React from 'react';
 import { DimensionSummary } from '../types/rmi';
+import { motion } from 'framer-motion';
 
 interface RadarChartProps {
   dimensions: DimensionSummary[];
@@ -110,19 +111,30 @@ export const RadarChart: React.FC<RadarChartProps> = ({
           strokeDasharray="4,4"
         />
 
-        {/* Actual Score Polygon (Purple Accent Stroke & Radiant Fill) */}
-        <polygon
+        {/* Actual Score Polygon (Animated Spring & Radiant Fill) */}
+        <motion.polygon
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformOrigin: `${center}px ${center}px` }}
           points={actualPoints}
           fill="url(#radarFillPurple)"
           stroke="#6531F7"
           strokeWidth="2.5"
         />
 
-        {/* Data points (Purple Dots with White Ring) */}
+        {/* Data points (Purple Dots with Animated Pop & Glow Ring) */}
         {dimensions.map((d, i) => {
           const pt = getPoint(i, Math.max(0, Math.min(5, d.score)));
           return (
-            <g key={`dot-${i}`} filter="url(#glowNode)">
+            <motion.g
+              key={`dot-${i}`}
+              filter="url(#glowNode)"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.15 + i * 0.08, type: 'spring', stiffness: 350, damping: 20 }}
+              style={{ transformOrigin: `${pt.x}px ${pt.y}px` }}
+            >
               <circle
                 cx={pt.x}
                 cy={pt.y}
@@ -131,7 +143,16 @@ export const RadarChart: React.FC<RadarChartProps> = ({
                 stroke="#FFFFFF"
                 strokeWidth="2.5"
               />
-            </g>
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r="9"
+                fill="none"
+                stroke="#6531F7"
+                strokeWidth="1.2"
+                opacity="0.35"
+              />
+            </motion.g>
           );
         })}
 
