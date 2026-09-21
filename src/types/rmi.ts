@@ -109,5 +109,36 @@ export interface CompleteAssessmentData {
   documentChecklist: DocumentChecklistItem[];
   recommendations: RecommendationItem[];
   dimensionSummaries?: Record<number, DimensionSummaryDetail>;
+  perceptionSurvey?: PerceptionSurveyData;
 }
+
+export interface SurveyQuestion {
+  id: string;
+  dimNum: number;
+  dimName: string;
+  subtopic: string;
+  question: string;
+}
+
+export type RespondentGroup =
+  | 'dekom'      // Dewan Komisaris / Dewan Pengawas / KPR
+  | 'direksi'    // Direksi
+  | 'lini1'      // Unit Bisnis / Operasional
+  | 'lini2'      // Unit Manajemen Risiko / Kepatuhan
+  | 'lini3';     // Internal Audit
+
+export interface SurveySubmission {
+  id: string;
+  respondentName?: string;
+  respondentGroup: RespondentGroup;
+  department: string;
+  answers: Record<string, number>; // questionId -> score (1..5)
+  notes?: string;
+  submittedAt: string;
+}
+
+export interface PerceptionSurveyData {
+  submissions: SurveySubmission[];
+}
+
 

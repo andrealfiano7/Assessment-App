@@ -1,6 +1,7 @@
 import { CompleteAssessmentData, ParameterAssessment, RecommendationItem } from '../types/rmi';
 import rmiUmumData from './rmiUmum.json';
 import checklistData from './checklistDokumen.json';
+import { SAMPLE_SURVEY_SUBMISSIONS } from './samplePerceptionData';
 
 // Generate simulated scores reflecting PT ABC (Average D1=3.7, D2=3.0, D3=3.8, D4=3.2, D5=3.0 -> total ~3.4)
 export function getPtAbcSampleData(): CompleteAssessmentData {
@@ -186,6 +187,9 @@ export function getPtAbcSampleData(): CompleteAssessmentData {
         shortTermRec: 'Standardisasi format pelaporan data insiden kerugian dan pelacakan status mitigasi risiko secara digital.',
         longTermRec: 'Implementasi platform Enterprise Governance, Risk, and Compliance (EGRC) terpadu yang terkoneksi langsung dengan sistem core transactional database korporasi.'
       }
+    },
+    perceptionSurvey: {
+      submissions: SAMPLE_SURVEY_SUBMISSIONS
     }
   };
 }

@@ -7,7 +7,8 @@ import {
   DocumentChecklistItem,
   RecommendationItem,
   AssessmentProfile,
-  DimensionSummaryDetail
+  DimensionSummaryDetail,
+  PerceptionSurveyData
 } from './types/rmi';
 import { calculateRmi } from './utils/calculator';
 import {
@@ -24,6 +25,7 @@ import { LampiranIvView } from './components/LampiranIvView';
 import { PerformanceView } from './components/PerformanceView';
 import { DocumentChecklist } from './components/DocumentChecklist';
 import { GapAnalysisView } from './components/GapAnalysisView';
+import { PerceptionSurveyView } from './components/PerceptionSurveyView';
 import { FollowUpMonitoring } from './components/FollowUpMonitoring';
 import { OfficialReportView } from './components/OfficialReportView';
 import { ProfileModal } from './components/ProfileModal';
@@ -111,6 +113,13 @@ export function App() {
     }));
   };
 
+  const handleUpdatePerceptionSurvey = (surveyData: PerceptionSurveyData) => {
+    setAssessmentData(prev => ({
+      ...prev,
+      perceptionSurvey: surveyData
+    }));
+  };
+
   const handleNewAssessment = (newData: CompleteAssessmentData) => {
     setAssessmentData(newData);
     setActiveTab('dashboard');
@@ -124,6 +133,8 @@ export function App() {
       setActiveTab('performance');
     } else if (tab === 'dokumen') {
       setActiveTab('checklist');
+    } else if (tab === 'persepsi' || tab === 'survei') {
+      setActiveTab('perception');
     } else if (tab === 'laporan') {
       setActiveTab('report');
     } else {
@@ -269,6 +280,14 @@ export function App() {
                     assessmentData={assessmentData}
                     calculation={calculation}
                     onUpdateRecommendations={handleUpdateRecommendations}
+                  />
+                )}
+
+                {activeTab === 'perception' && (
+                  <PerceptionSurveyView
+                    assessmentData={assessmentData}
+                    calculation={calculation}
+                    onUpdatePerceptionSurvey={handleUpdatePerceptionSurvey}
                   />
                 )}
 

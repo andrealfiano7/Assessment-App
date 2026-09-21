@@ -12,7 +12,8 @@ import {
   Sparkles,
   Shield,
   PanelLeftClose,
-  PanelLeft
+  PanelLeft,
+  MessageSquareQuote
 } from 'lucide-react';
 import { AssessmentProfile } from '../types/rmi';
 import { CalculationResult } from '../utils/calculator';
@@ -23,8 +24,9 @@ export type NavTabId =
   | 'assessment'
   | 'lampiran4'
   | 'performance'
-  | 'checklist'
   | 'gap'
+  | 'checklist'
+  | 'perception'
   | 'monitoring'
   | 'report';
 
@@ -106,6 +108,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
           label: 'Checklist Dokumen',
           sublabel: '168 Berkas Verifikasi',
           icon: FileCheck2
+        },
+        {
+          id: 'perception' as NavTabId,
+          label: 'Survei Persepsi',
+          sublabel: 'Kuesioner 5 Dimensi',
+          icon: MessageSquareQuote,
+          badge: 'Survei'
         }
       ]
     },
